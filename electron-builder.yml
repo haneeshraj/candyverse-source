@@ -1,5 +1,5 @@
 appId: com.electron.app
-productName: candyverse
+productName: Candy Heist
 directories:
   buildResources: build
 files:

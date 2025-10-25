@@ -78,7 +78,13 @@ function App(): JSX.Element {
 
   return (
     <>
-      <h2>Title bar testing im just changing shit to check if the app is working.</h2>
+      <h2
+        style={{
+          fontSize: '10rem'
+        }}
+      >
+        ABSOLUTE DOG SHIT TEST IGNORE PLEASE
+      </h2>
       <div
         style={{
           height: '30px',

@@ -23,7 +23,6 @@ export function registerUpdateHandlers(): void {
 
   // Auto-updater events
   autoUpdater.on('checking-for-update', () => {
-    // sendToRenderer('update:checking-for-update');
     sendToRenderer(UPDATE_CHANNELS.CHECKING)
   })
 
