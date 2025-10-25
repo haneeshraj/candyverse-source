@@ -1,6 +1,6 @@
 {
   "name": "candyverse",
-  "version": "1.0.0-beta",
+  "version": "1.1.1-beta",
   "description": "Candy Heist's all-in-one desktop app for website management, personal AI agent and organiser.",
   "main": "./out/main/index.js",
   "author": "Haneesh Raj Banisetti",
@@ -23,6 +23,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
+    "dotenv": "^17.2.3",
     "electron-updater": "^6.1.7",
     "express": "^5.1.0"
   },

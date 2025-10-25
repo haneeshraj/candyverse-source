@@ -85,6 +85,13 @@ function App(): JSX.Element {
       >
         ABSOLUTE DOG SHIT TEST IGNORE PLEASE
       </h2>
+
+      {/* print VITE_GH_TOKEN is accessible from env */}
+
+      <p>
+        <strong>VITE_GH_TOKEN</strong>: {import.meta.env.VITE_GH_TOKEN ?? 'NOT SET'}
+      </p>
+
       <div
         style={{
           height: '30px',

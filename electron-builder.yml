@@ -42,6 +42,7 @@ publish:
   provider: github
   owner: haneeshraj
   repo: candyverse
+  private: true
   releaseType: draft
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
