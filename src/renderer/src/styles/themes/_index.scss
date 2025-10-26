@@ -1,0 +1,14 @@
+@forward './theme-light';
+@forward './theme-dark';
+@forward './theme-css-vars';
+
+// Load theme-dark to get the default theme value
+@use './theme-dark';
+
+// Set default theme - this needs to be forwarded
+$theme: theme-dark.$dark-theme !default;
+
+// Forward the theme function WITH the $theme variable
+@forward '../utils/theme-function' with (
+  $theme: $theme
+);

@@ -32,6 +32,37 @@ interface TitlebarAPI {
   onMaximized: (callback: (isMaximized: boolean) => void) => void
 }
 
+interface SystemInfoAPI {
+  getAppInfo: () => Promise<{
+    name: string
+    version: string
+    electronVersion: string
+    chromeVersion: string
+    nodeVersion: string
+    v8Version: string
+    environment: string
+  }>
+  getSystemInfo: () => Promise<{
+    platform: string
+    platformVersion: string
+    arch: string
+    hostname: string
+    cpuModel: string
+    cpuCores: number
+    totalMemory: number
+    locale: string
+    timezone: string
+  }>
+  getMemoryInfo: () => Promise<{
+    rss: number
+    heapTotal: number
+    heapUsed: number
+    external: number
+    freeMemory: number
+    totalMemory: number
+  }>
+}
+
 // Extend the Window interface
 declare global {
   interface Window {
@@ -40,5 +71,6 @@ declare global {
     updater: UpdaterAPI
     app: AppAPI
     titlebar: TitlebarAPI
+    systemInfo: SystemInfoAPI
   }
 }

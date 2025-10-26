@@ -1,0 +1,15 @@
+@use '../variables/colors-base' as *;
+@use './theme-light' as *;
+@use './theme-dark' as *;
+
+:root {
+  @each $key, $value in $light-theme {
+    --color-#{$key}: #{$value};
+  }
+}
+
+[data-theme="dark"] {
+  @each $key, $value in $dark-theme {
+    --color-#{$key}: #{$value};
+  }
+}

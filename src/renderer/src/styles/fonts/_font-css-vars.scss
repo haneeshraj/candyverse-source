@@ -1,0 +1,12 @@
+@use 'sass:map';
+@use './funnel-display' as *;
+
+:root {
+  --font-family: #{map.get($funnel-display, 'family')}, #{map.get($funnel-display, 'fallback')};
+  
+  @each $key, $value in $funnel-display {
+    @if $key != 'family' and $key != 'fallback' {
+      --font-#{$key}: #{$value};
+    }
+  }
+}

@@ -1,0 +1,156 @@
+@use '../variables/colors-base' as *;
+
+
+$light-theme: (
+  // Primary colors
+  primary: $color-primary-600,
+  primary-hover: $color-primary-700,
+  primary-active: $color-primary-800,
+  primary-light: $color-primary-100,
+  primary-dark: $color-primary-900,
+  primary-contrast: $color-white,
+  
+  // Secondary colors
+  secondary: $color-secondary-600,
+  secondary-hover: $color-secondary-700,
+  secondary-active: $color-secondary-800,
+  secondary-light: $color-secondary-100,
+  secondary-dark: $color-secondary-900,
+  secondary-contrast: $color-white,
+  
+  // Status colors
+  success: $color-success-600,
+  success-hover: $color-success-700,
+  success-active: $color-success-800,
+  success-light: $color-success-50,
+  success-contrast: $color-white,
+  
+  error: $color-error-600,
+  error-hover: $color-error-700,
+  error-active: $color-error-800,
+  error-light: $color-error-50,
+  error-contrast: $color-white,
+  
+  warning: $color-warning-600,
+  warning-hover: $color-warning-700,
+  warning-active: $color-warning-800,
+  warning-light: $color-warning-50,
+  warning-contrast: $color-gray-900,
+  
+  info: $color-info-600,
+  info-hover: $color-info-700,
+  info-active: $color-info-800,
+  info-light: $color-info-50,
+  info-contrast: $color-white,
+  
+  // Background colors
+  background-primary: $color-white,
+  background-secondary: $color-gray-50,
+  background-tertiary: $color-gray-100,
+  background-elevated: $color-white,
+  background-overlay: rgba($color-black, 0.5),
+  
+  // Surface colors
+  surface: $color-white,
+  surface-hover: $color-gray-50,
+  surface-active: $color-gray-100,
+  surface-elevated: $color-white,
+  
+  // Text colors
+  text-primary: $color-gray-900,
+  text-secondary: $color-gray-700,
+  text-tertiary: $color-gray-600,
+  text-disabled: $color-gray-400,
+  text-inverse: $color-white,
+  text-link: $color-primary-600,
+  text-link-hover: $color-primary-700,
+  
+  // Button - Primary
+  button-primary-bg: $color-primary-600,
+  button-primary-hover: $color-primary-700,
+  button-primary-active: $color-primary-800,
+  button-primary-text: $color-white,
+  button-primary-disabled-bg: $color-gray-300,
+  button-primary-disabled-text: $color-gray-500,
+  
+  // Button - Secondary
+  button-secondary-bg: $color-secondary-600,
+  button-secondary-hover: $color-secondary-700,
+  button-secondary-active: $color-secondary-800,
+  button-secondary-text: $color-white,
+  button-secondary-disabled-bg: $color-gray-300,
+  button-secondary-disabled-text: $color-gray-500,
+  
+  // Button - Outlined
+  button-outlined-border: $color-primary-600,
+  button-outlined-text: $color-primary-600,
+  button-outlined-hover-bg: $color-primary-50,
+  button-outlined-hover-border: $color-primary-700,
+  button-outlined-disabled-border: $color-gray-300,
+  button-outlined-disabled-text: $color-gray-400,
+  
+  // Button - Ghost/Text
+  button-ghost-text: $color-primary-600,
+  button-ghost-hover-bg: $color-primary-50,
+  button-ghost-active-bg: $color-primary-100,
+  button-ghost-disabled-text: $color-gray-400,
+  
+  // Button - Danger
+  button-danger-bg: $color-error-600,
+  button-danger-hover: $color-error-700,
+  button-danger-active: $color-error-800,
+  button-danger-text: $color-white,
+  
+  // Input fields
+  input-bg: $color-white,
+  input-border: $color-gray-300,
+  input-border-hover: $color-gray-400,
+  input-border-focus: $color-primary-600,
+  input-text: $color-gray-900,
+  input-placeholder: $color-gray-500,
+  input-disabled-bg: $color-gray-100,
+  input-disabled-text: $color-gray-400,
+  input-error-border: $color-error-600,
+  input-success-border: $color-success-600,
+  
+  // Border colors
+  border-primary: $color-gray-300,
+  border-secondary: $color-gray-200,
+  border-focus: $color-primary-600,
+  border-error: $color-error-600,
+  border-success: $color-success-600,
+  border-divider: $color-gray-200,
+  
+  // Shadow & Overlay
+  shadow-sm: rgba($color-black, 0.05),
+  shadow-md: rgba($color-black, 0.1),
+  shadow-lg: rgba($color-black, 0.15),
+  shadow-xl: rgba($color-black, 0.2),
+  
+  // Interactive states
+  hover-overlay: rgba($color-black, 0.04),
+  active-overlay: rgba($color-black, 0.08),
+  focus-ring: rgba($color-primary-600, 0.25),
+  
+  // Disabled states
+  disabled-bg: $color-gray-300,
+  disabled-text: $color-gray-400,
+  disabled-border: $color-gray-300,
+  
+  // Selection
+  selection-bg: $color-primary-100,
+  selection-text: $color-primary-900,
+  
+  // Badges & Tags
+  badge-neutral-bg: $color-gray-200,
+  badge-neutral-text: $color-gray-800,
+  
+  // Tooltips & Popovers
+  tooltip-bg: $color-gray-900,
+  tooltip-text: $color-white,
+  
+  // Code & Pre
+  code-bg: $color-gray-100,
+  code-text: $color-error-700,
+  code-border: $color-gray-300,
+) !default;

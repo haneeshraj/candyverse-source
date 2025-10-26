@@ -1,9 +1,10 @@
-import { registerSystemHandlers } from "./systemHandlers";
-import { registerUpdateHandlers } from "./updateHandlers";
+import { registerSystemHandlers } from './systemHandlers'
+import { registerSystemInfoHandlers } from './systemInfoHandler'
+import { registerUpdateHandlers } from './updateHandlers'
 
 export function registerIpcHandlers(): void {
-    registerSystemHandlers();
-    registerUpdateHandlers();
-
-    // Add more handler registrations here as needed
+  registerSystemHandlers()
+  registerUpdateHandlers()
+  registerSystemInfoHandlers()
+  // Add more handler registrations here as needed
 }

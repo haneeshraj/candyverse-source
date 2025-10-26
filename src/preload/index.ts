@@ -3,6 +3,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 import {
   APP_CHANNELS,
   SERVER_CHANNELS,
+  SYSTEM_INFO_CHANNELS,
   UPDATE_CHANNELS,
   WINDOW_CHANNELS
 } from '../common/constants'
@@ -65,7 +66,6 @@ const updater = {
 const app = {
   getAppVersion: () => ipcRenderer.invoke(APP_CHANNELS.GET_VERSION),
   getAppPath: (name: string) => {
-    console.log('getAppPath called with:', name) // Debug
     return ipcRenderer.invoke(APP_CHANNELS.GET_PATH, name)
   }
 }
@@ -86,6 +86,13 @@ const titlebar = {
   }
 }
 
+// Add System Info API
+const systemInfo = {
+  getAppInfo: () => ipcRenderer.invoke(SYSTEM_INFO_CHANNELS.GET_APP_INFO),
+  getSystemInfo: () => ipcRenderer.invoke(SYSTEM_INFO_CHANNELS.GET_SYSTEM_INFO),
+  getMemoryInfo: () => ipcRenderer.invoke(SYSTEM_INFO_CHANNELS.GET_MEMORY_INFO)
+}
+
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
@@ -96,6 +103,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('updater', updater)
     contextBridge.exposeInMainWorld('app', app)
     contextBridge.exposeInMainWorld('titlebar', titlebar)
+    contextBridge.exposeInMainWorld('systemInfo', systemInfo)
   } catch (error) {
     console.error(error)
   }
@@ -110,4 +118,6 @@ if (process.contextIsolated) {
   window.api = app
   // @ts-ignore (define in dts)
   window.titlebar = titlebar
+  // @ts-ignore (define in dts)
+  window.systemInfo = systemInfo
 }

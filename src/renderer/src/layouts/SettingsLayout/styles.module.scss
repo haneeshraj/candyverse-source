@@ -1,0 +1,77 @@
+.settings-layout {
+  display: flex;
+  width: 100%;
+}
+
+.settings-sidebar {
+  width: 25rem;
+  background-color: var(--color-background-primary);
+  border-left: 1px solid var(--color-border-divider);
+  padding: 2rem;
+  overflow-y: auto;
+  position: fixed;
+  top: 4.8rem;
+  right: 0;
+  height: calc(100vh - 4.8rem);
+}
+
+.settings-title {
+  font-size: 1.6rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: 2rem;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--color-border-divider);
+}
+
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 1.6rem;
+  text-decoration: none;
+  color: var(--color-text-secondary);
+  border-radius: 0.8rem;
+  transition: all 200ms ease;
+  font-size: 1.4rem;
+  font-weight: var(--font-weight-regular);
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  span {
+    flex: 1;
+  }
+
+  &:hover {
+    background-color: var(--color-surface-hover);
+    color: var(--color-text-primary);
+  }
+
+  &--active {
+    background-color: var(--color-surface-active);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+.settings-content {
+  flex: 1;
+  // overflow-y: auto;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}

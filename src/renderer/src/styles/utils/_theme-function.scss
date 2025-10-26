@@ -1,0 +1,9 @@
+@use 'sass:map';
+
+// Accept the theme as a configurable variable
+$theme: null !default;
+
+// Theme getter function
+@function theme($key) {
+  @return map.get($theme, $key);
+}

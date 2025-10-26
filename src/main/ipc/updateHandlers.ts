@@ -32,38 +32,31 @@ export function registerUpdateHandlers(): void {
 
   // Auto-updater events
   autoUpdater.on('checking-for-update', () => {
-    console.log(GH_TOKEN)
     sendToRenderer(UPDATE_CHANNELS.CHECKING)
   })
 
   autoUpdater.on('update-available', (info) => {
-    console.log(GH_TOKEN)
     sendToRenderer(UPDATE_CHANNELS.UPDATE_AVAILABLE, info)
   })
 
   autoUpdater.on('update-not-available', (info) => {
-    console.log(GH_TOKEN)
     sendToRenderer(UPDATE_CHANNELS.UPDATE_NOT_AVAILABLE, info)
   })
 
   autoUpdater.on('download-progress', (progressObj) => {
-    console.log(GH_TOKEN)
     sendToRenderer(UPDATE_CHANNELS.DOWNLOAD_PROGRESS, progressObj)
   })
 
   autoUpdater.on('update-downloaded', (info) => {
-    console.log(GH_TOKEN)
     sendToRenderer(UPDATE_CHANNELS.UPDATE_DOWNLOADED, info)
   })
 
   autoUpdater.on('error', (err) => {
-    console.log(GH_TOKEN)
     sendToRenderer(UPDATE_CHANNELS.ERROR, err.message)
   })
 }
 
 export async function checkForUpdates(): Promise<void> {
-  console.log(GH_TOKEN)
   try {
     await autoUpdater.checkForUpdates()
   } catch (error) {

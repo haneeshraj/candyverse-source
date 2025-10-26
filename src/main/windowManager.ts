@@ -2,6 +2,7 @@ import { BrowserWindow, shell } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import { WINDOW_CHANNELS } from '../common/constants'
 
 let mainWindow: BrowserWindow | null = null
 
@@ -12,7 +13,7 @@ export function createWindow(): BrowserWindow {
     height: 720,
     minWidth: 900,
     minHeight: 670,
-    // frame: false,
+    frame: false,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -27,11 +28,11 @@ export function createWindow(): BrowserWindow {
   })
 
   mainWindow.on('maximize', () => {
-    mainWindow?.webContents.send('window:maximized', true)
+    mainWindow?.webContents.send(WINDOW_CHANNELS.MAXIMIZED, true)
   })
 
   mainWindow.on('unmaximize', () => {
-    mainWindow?.webContents.send('window:maximized', false)
+    mainWindow?.webContents.send(WINDOW_CHANNELS.MAXIMIZED, false)
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

@@ -1,0 +1,9 @@
+@use 'sass:map';
+
+// Accept the font as a configurable variable
+$font: null !default;
+
+// Font getter function
+@function font($key) {
+  @return map.get($font, $key);
+}

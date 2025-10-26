@@ -16,15 +16,19 @@ export const SERVER_CHANNELS = {
 } as const
 
 export const UPDATE_CHANNELS = {
-  // Actions (renderer -> main)
   DOWNLOAD: 'update:download',
   INSTALL: 'update:install',
 
-  // Events (main -> renderer)
   CHECKING: 'update:checking-for-update',
   UPDATE_AVAILABLE: 'update:update-available',
   UPDATE_NOT_AVAILABLE: 'update:update-not-available',
   DOWNLOAD_PROGRESS: 'update:download-progress',
   UPDATE_DOWNLOADED: 'update:update-downloaded',
   ERROR: 'update:error'
+} as const
+
+export const SYSTEM_INFO_CHANNELS = {
+  GET_APP_INFO: 'system:get-app-info',
+  GET_SYSTEM_INFO: 'system:get-system-info',
+  GET_MEMORY_INFO: 'system:get-memory-info'
 } as const

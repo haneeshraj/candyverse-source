@@ -1,0 +1,13 @@
+@forward './funnel-display';
+@forward './font-css-vars';
+
+// Load funnel-display to get the default font value
+@use './funnel-display';
+
+// Set default font - this needs to be forwarded
+$font: funnel-display.$funnel-display !default;
+
+// Forward the font function WITH the $font variable
+@forward '../utils/font-function' with (
+  $font: $font
+);

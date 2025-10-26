@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import Versions from './components/Versions'
+import ThemeSwitcher from './components/ThemeSwitcher/ThemeSwitcher'
 
 function App(): JSX.Element {
   const [appVersion, setAppVersion] = useState<string>('')
@@ -78,6 +78,11 @@ function App(): JSX.Element {
 
   return (
     <>
+      {/* Theme Switcher - Fixed position in top right */}
+      <div style={{ position: 'fixed', top: '1rem', right: '1rem', zIndex: 1000 }}>
+        <ThemeSwitcher />
+      </div>
+
       <h2
         style={{
           fontSize: '10rem'
@@ -85,12 +90,6 @@ function App(): JSX.Element {
       >
         ABSOLUTE DOG SHIT TEST IGNORE PLEASE
       </h2>
-
-      {/* print VITE_GH_TOKEN is accessible from env */}
-
-      <p>
-        <strong>VITE_GH_TOKEN</strong>: {import.meta.env.VITE_GH_TOKEN ?? 'NOT SET'}
-      </p>
 
       <div
         style={{
@@ -161,8 +160,6 @@ function App(): JSX.Element {
 
         {updateStatus === 'error' && <p>❌ Error checking for updates</p>}
       </div>
-
-      <Versions></Versions>
     </>
   )
 }
