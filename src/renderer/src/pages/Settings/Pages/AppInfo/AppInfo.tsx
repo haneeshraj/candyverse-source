@@ -1,10 +1,49 @@
-import { withPageTransition } from '@renderer/components/AnimatedOutlet'
 import { useEffect, useState } from 'react'
+import { withPageTransition } from '@renderer/components/AnimatedOutlet'
 import styles from './styles.module.scss'
-import { AppInfo as ApplicationInfo, SystemInfo, MemoryInfo, UpdateStatus } from './types'
 
-function AppInfo() {
-  const [appInfo, setAppInfo] = useState<ApplicationInfo | null>(null)
+interface AppInfo {
+  name: string
+  version: string
+  electronVersion: string
+  chromeVersion: string
+  nodeVersion: string
+  v8Version: string
+  environment: string
+}
+
+interface SystemInfo {
+  platform: string
+  platformVersion: string
+  arch: string
+  hostname: string
+  cpuModel: string
+  cpuCores: number
+  totalMemory: number
+  locale: string
+  timezone: string
+}
+
+interface MemoryInfo {
+  rss: number
+  heapTotal: number
+  heapUsed: number
+  external: number
+  freeMemory: number
+  totalMemory: number
+}
+
+type UpdateStatus =
+  | 'idle'
+  | 'checking'
+  | 'available'
+  | 'not-available'
+  | 'downloading'
+  | 'downloaded'
+  | 'error'
+
+function InformationPage() {
+  const [appInfo, setAppInfo] = useState<AppInfo | null>(null)
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null)
   const [memoryInfo, setMemoryInfo] = useState<MemoryInfo | null>(null)
   const [loading, setLoading] = useState(true)
@@ -130,7 +169,12 @@ function AppInfo() {
 
   return (
     <div className={styles['info-page']}>
-      <h1 className={styles['page-title']}>System Information</h1>
+      <h1 className="main-heading">App Information</h1>
+      <p className="main-description">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam rerum harum blanditiis eos
+        necessitatibus quae neque quasi non eum. Illo, ullam! Nemo sequi amet totam consequuntur
+        fugiat officiis! Dolorem, earum?
+      </p>
 
       {/* App Information */}
       {appInfo && (
@@ -138,12 +182,8 @@ function AppInfo() {
           <h2 className={styles['section-title']}>Application</h2>
           <div className={styles['info-grid']}>
             <InfoItem label="Name" value={appInfo.name} />
-            <InfoItem label="Version" value={appInfo.version} accent="primary" />
-            <InfoItem
-              label="Environment"
-              value={appInfo.environment}
-              accent={appInfo.environment === 'production' ? 'success' : 'warning'}
-            />
+            <InfoItem label="Version" value={appInfo.version} />
+            <InfoItem label="Environment" value={appInfo.environment} />
             <InfoItem label="Electron" value={appInfo.electronVersion} />
             <InfoItem label="Chrome" value={appInfo.chromeVersion} />
             <InfoItem label="Node.js" value={appInfo.nodeVersion} />
@@ -157,16 +197,12 @@ function AppInfo() {
         <section className={styles['info-section']}>
           <h2 className={styles['section-title']}>System</h2>
           <div className={styles['info-grid']}>
-            <InfoItem
-              label="Operating System"
-              value={getPlatformName(systemInfo.platform)}
-              accent="info"
-            />
+            <InfoItem label="Operating System" value={getPlatformName(systemInfo.platform)} />
             <InfoItem label="OS Version" value={systemInfo.platformVersion} />
             <InfoItem label="Architecture" value={systemInfo.arch} />
             <InfoItem label="Hostname" value={systemInfo.hostname} />
             <InfoItem label="CPU" value={systemInfo.cpuModel} />
-            <InfoItem label="CPU Cores" value={systemInfo.cpuCores.toString()} accent="secondary" />
+            <InfoItem label="CPU Cores" value={systemInfo.cpuCores.toString()} />
             <InfoItem label="Total Memory" value={formatBytes(systemInfo.totalMemory)} />
             <InfoItem label="Locale" value={systemInfo.locale} />
             <InfoItem label="Timezone" value={systemInfo.timezone} />
@@ -183,11 +219,7 @@ function AppInfo() {
             <InfoItem label="Heap Total" value={formatBytes(memoryInfo.heapTotal)} />
             <InfoItem label="RSS" value={formatBytes(memoryInfo.rss)} />
             <InfoItem label="External" value={formatBytes(memoryInfo.external)} />
-            <InfoItem
-              label="Free Memory"
-              value={formatBytes(memoryInfo.freeMemory)}
-              accent="success"
-            />
+            <InfoItem label="Free Memory" value={formatBytes(memoryInfo.freeMemory)} />
             <InfoItem
               label="Memory Usage"
               value={`${getMemoryUsagePercentage().toFixed(1)}%`}
@@ -322,7 +354,7 @@ function InfoItem({
 }: {
   label: string
   value: string
-  accent?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info'
+  accent?: 'success' | 'error' | 'warning'
 }) {
   return (
     <div className={styles['info-item']}>
@@ -334,4 +366,4 @@ function InfoItem({
   )
 }
 
-export default withPageTransition(AppInfo)
+export default withPageTransition(InformationPage)

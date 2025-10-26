@@ -64,14 +64,7 @@
   word-break: break-word;
   transition: color 200ms ease;
 
-  &--primary {
-    color: var(--color-primary);
-  }
-
-  &--secondary {
-    color: var(--color-secondary);
-  }
-
+  // Only memory usage percentage has colors
   &--success {
     color: var(--color-success);
   }
@@ -83,10 +76,6 @@
   &--warning {
     color: var(--color-warning);
   }
-
-  &--info {
-    color: var(--color-info);
-  }
 }
 
 .refresh-note {
@@ -97,7 +86,7 @@
   text-align: center;
 }
 
-// Progress Bar
+// Progress Bar (for memory and updates)
 .progress-container {
   margin-top: 2.4rem;
   padding: 1.6rem;
