@@ -7,8 +7,8 @@ import {
   KanbanIcon,
   UsersThreeIcon,
   EqualizerIcon,
-  EnvelopeIcon,
   VideoCameraIcon,
+  ImagesIcon,
   IconProps
 } from '@phosphor-icons/react'
 
@@ -22,14 +22,13 @@ import NotFoundPage from '../pages/NotFound/NoteFoundPage'
 import React from 'react'
 import Collabs from '@renderer/pages/Collabs/Collabs'
 import Discography from '@renderer/pages/Discography/Discography'
-import WebContacts from '@renderer/pages/WebContacts/WebContacts'
 import SocialInfo from '@renderer/pages/SocialInfo/SocialInfo'
 
 export interface RouteHandle {
   title: string
   icon: React.ComponentType<IconProps>
   showInNav?: boolean
-  category?: 'general' | 'web' | 'app' | 'music'
+  category?: 'general' | 'branding' | 'app' | 'web' | 'auth' | 'admin'
   showInSettingsNav?: boolean
 }
 
@@ -45,6 +44,17 @@ export const appRoutes = [
       category: 'general'
     } as RouteHandle
   },
+
+  {
+    path: 'app-manager',
+    element: <ProjectManager />,
+    handle: {
+      title: 'App Manager',
+      icon: KanbanIcon,
+      showInNav: true,
+      category: 'app'
+    } as RouteHandle
+  },
   {
     path: 'settings',
     element: <SettingsLayout />,
@@ -56,13 +66,23 @@ export const appRoutes = [
     } as RouteHandle
   },
   {
-    path: 'project-manager',
-    element: <ProjectManager />,
+    path: 'discography',
+    element: <Discography />,
     handle: {
-      title: 'Project Manager',
-      icon: KanbanIcon,
+      title: 'Discography',
+      icon: EqualizerIcon,
       showInNav: true,
-      category: 'music'
+      category: 'branding'
+    } as RouteHandle
+  },
+  {
+    path: 'branding-assets',
+    element: <Discography />,
+    handle: {
+      title: 'Branding Assets',
+      icon: ImagesIcon,
+      showInNav: true,
+      category: 'branding'
     } as RouteHandle
   },
   {
@@ -72,17 +92,7 @@ export const appRoutes = [
       title: 'Artist Collabs',
       icon: UsersThreeIcon,
       showInNav: true,
-      category: 'music'
-    } as RouteHandle
-  },
-  {
-    path: 'web-contacts',
-    element: <WebContacts />,
-    handle: {
-      title: 'Web Contacts',
-      icon: EnvelopeIcon,
-      showInNav: true,
-      category: 'web'
+      category: 'branding'
     } as RouteHandle
   },
   {
@@ -92,17 +102,7 @@ export const appRoutes = [
       title: 'Social Information',
       icon: VideoCameraIcon,
       showInNav: true,
-      category: 'general'
-    } as RouteHandle
-  },
-  {
-    path: 'discography',
-    element: <Discography />,
-    handle: {
-      title: 'Discography',
-      icon: EqualizerIcon,
-      showInNav: true,
-      category: 'music'
+      category: 'branding'
     } as RouteHandle
   }
 ]
@@ -146,23 +146,13 @@ export const routeConfig: RouteObject[] = [
         } as RouteHandle
       },
       {
-        path: 'project-manager',
-        element: <ProjectManager />, // Use proper component
+        path: 'app-manager',
+        element: <ProjectManager />,
         handle: {
-          title: 'Project Manager',
+          title: 'App Manager',
           icon: KanbanIcon,
           showInNav: true,
-          category: 'music'
-        } as RouteHandle
-      },
-      {
-        path: 'collabs',
-        element: <Collabs />,
-        handle: {
-          title: 'Artist Collabs',
-          icon: UsersThreeIcon,
-          showInNav: true,
-          category: 'music'
+          category: 'app'
         } as RouteHandle
       },
       {
@@ -172,17 +162,38 @@ export const routeConfig: RouteObject[] = [
           title: 'Discography',
           icon: EqualizerIcon,
           showInNav: true,
-          category: 'music'
+          category: 'branding'
         } as RouteHandle
       },
       {
-        path: 'web-contacts',
-        element: <WebContacts />,
+        path: 'branding-assets',
+        element: <Discography />,
         handle: {
-          title: 'Web Contacts',
-          icon: EnvelopeIcon,
+          title: 'Branding Assets',
+          icon: ImagesIcon,
           showInNav: true,
-          category: 'web'
+          category: 'branding'
+        } as RouteHandle
+      },
+      {
+        path: 'collabs',
+        element: <Collabs />,
+        handle: {
+          title: 'Artist Collabs',
+          icon: UsersThreeIcon,
+          showInNav: true,
+          category: 'branding'
+        } as RouteHandle
+      },
+      // ADD THIS - it's missing!
+      {
+        path: 'social-info',
+        element: <SocialInfo />,
+        handle: {
+          title: 'Social Information',
+          icon: VideoCameraIcon,
+          showInNav: true,
+          category: 'branding'
         } as RouteHandle
       },
       {
@@ -196,7 +207,6 @@ export const routeConfig: RouteObject[] = [
         } as RouteHandle,
         children: settingsRoutes
       },
-
       {
         path: '*',
         element: <NotFoundPage />,

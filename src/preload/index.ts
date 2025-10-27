@@ -62,6 +62,7 @@ const updater = {
     ipcRenderer.invoke(UPDATE_CHANNELS.INSTALL)
   }
 }
+
 // App API
 const app = {
   getAppVersion: () => ipcRenderer.invoke(APP_CHANNELS.GET_VERSION),
@@ -86,11 +87,19 @@ const titlebar = {
   }
 }
 
-// Add System Info API
+// System Info API
 const systemInfo = {
   getAppInfo: () => ipcRenderer.invoke(SYSTEM_INFO_CHANNELS.GET_APP_INFO),
   getSystemInfo: () => ipcRenderer.invoke(SYSTEM_INFO_CHANNELS.GET_SYSTEM_INFO),
   getMemoryInfo: () => ipcRenderer.invoke(SYSTEM_INFO_CHANNELS.GET_MEMORY_INFO)
+}
+
+// Google Drive API
+const googleDrive = {
+  isAuthenticated: () => ipcRenderer.invoke('drive:is-authenticated'),
+  authenticate: () => ipcRenderer.invoke('drive:auth'),
+  listFiles: () => ipcRenderer.invoke('drive:list'),
+  logout: () => ipcRenderer.invoke('drive:logout')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -104,6 +113,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('app', app)
     contextBridge.exposeInMainWorld('titlebar', titlebar)
     contextBridge.exposeInMainWorld('systemInfo', systemInfo)
+    contextBridge.exposeInMainWorld('googleDrive', googleDrive)
   } catch (error) {
     console.error(error)
   }
@@ -120,4 +130,6 @@ if (process.contextIsolated) {
   window.titlebar = titlebar
   // @ts-ignore (define in dts)
   window.systemInfo = systemInfo
+  // @ts-ignore (define in dts)
+  window.googleDrive = googleDrive
 }

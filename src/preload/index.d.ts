@@ -63,6 +63,13 @@ interface SystemInfoAPI {
   }>
 }
 
+interface GoogleDriveAPI {
+  isAuthenticated: () => Promise<boolean>
+  authenticate: () => Promise<{ success: boolean; error?: string }>
+  listFiles: () => Promise<Array<{ id: string; name: string }>>
+  logout: () => Promise<{ success: boolean }>
+}
+
 // Extend the Window interface
 declare global {
   interface Window {
@@ -72,5 +79,6 @@ declare global {
     app: AppAPI
     titlebar: TitlebarAPI
     systemInfo: SystemInfoAPI
+    googleDrive: GoogleDriveAPI
   }
 }
