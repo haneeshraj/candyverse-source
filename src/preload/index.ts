@@ -96,10 +96,67 @@ const systemInfo = {
 
 // Google Drive API
 const googleDrive = {
+  // Authentication
   isAuthenticated: () => ipcRenderer.invoke('drive:is-authenticated'),
   authenticate: () => ipcRenderer.invoke('drive:auth'),
-  listFiles: () => ipcRenderer.invoke('drive:list'),
-  logout: () => ipcRenderer.invoke('drive:logout')
+  logout: () => ipcRenderer.invoke('drive:logout'),
+
+  // Folder operations
+  getAllFolders: (pageSize?: number) => ipcRenderer.invoke('drive:get-all-folders', pageSize),
+  getFoldersInFolder: (folderId: string, pageSize?: number) =>
+    ipcRenderer.invoke('drive:get-folders-in-folder', folderId, pageSize),
+  getRootFolders: (pageSize?: number) => ipcRenderer.invoke('drive:get-root-folders', pageSize),
+  getFolderContents: (folderId?: string) =>
+    ipcRenderer.invoke('drive:get-folder-contents', folderId),
+  createFolder: (name: string, parentId?: string) =>
+    ipcRenderer.invoke('drive:create-folder', name, parentId),
+
+  // File operations
+  getAllFiles: (pageSize?: number) => ipcRenderer.invoke('drive:get-all-files', pageSize),
+  getFilesInFolder: (folderId: string, pageSize?: number) =>
+    ipcRenderer.invoke('drive:get-files-in-folder', folderId, pageSize),
+  getFileById: (fileId: string) => ipcRenderer.invoke('drive:get-file-by-id', fileId),
+  searchFiles: (searchTerm: string, pageSize?: number) =>
+    ipcRenderer.invoke('drive:search-files', searchTerm, pageSize),
+  getFilesByMimeType: (mimeType: string, pageSize?: number) =>
+    ipcRenderer.invoke('drive:get-files-by-mime-type', mimeType, pageSize),
+
+  // Specialized queries
+  getStarredFiles: () => ipcRenderer.invoke('drive:get-starred-files'),
+  getSharedFiles: () => ipcRenderer.invoke('drive:get-shared-files'),
+  getRecentFiles: (days?: number) => ipcRenderer.invoke('drive:get-recent-files', days),
+  getTrashedFiles: () => ipcRenderer.invoke('drive:get-trashed-files'),
+
+  // File manipulation
+  uploadFile: (filePath: string, fileName: string, mimeType: string, parentId?: string) =>
+    ipcRenderer.invoke('drive:upload-file', filePath, fileName, mimeType, parentId),
+  downloadFile: (fileId: string, destPath: string) =>
+    ipcRenderer.invoke('drive:download-file', fileId, destPath),
+  renameFile: (fileId: string, newName: string) =>
+    ipcRenderer.invoke('drive:rename-file', fileId, newName),
+  moveFile: (fileId: string, newParentId: string) =>
+    ipcRenderer.invoke('drive:move-file', fileId, newParentId),
+  copyFile: (fileId: string, newName?: string, parentId?: string) =>
+    ipcRenderer.invoke('drive:copy-file', fileId, newName, parentId),
+  deleteFile: (fileId: string) => ipcRenderer.invoke('drive:delete-file', fileId),
+  permanentlyDeleteFile: (fileId: string) =>
+    ipcRenderer.invoke('drive:permanently-delete-file', fileId),
+  restoreFile: (fileId: string) => ipcRenderer.invoke('drive:restore-file', fileId),
+  setStarred: (fileId: string, starred: boolean) =>
+    ipcRenderer.invoke('drive:set-starred', fileId, starred),
+
+  // Permissions
+  shareFile: (fileId: string, email: string, role?: 'reader' | 'writer' | 'commenter' | 'owner') =>
+    ipcRenderer.invoke('drive:share-file', fileId, email, role),
+  getFilePermissions: (fileId: string) => ipcRenderer.invoke('drive:get-file-permissions', fileId),
+  removePermission: (fileId: string, permissionId: string) =>
+    ipcRenderer.invoke('drive:remove-permission', fileId, permissionId),
+
+  // Storage info
+  getStorageQuota: () => ipcRenderer.invoke('drive:get-storage-quota'),
+
+  // Legacy
+  listFiles: () => ipcRenderer.invoke('drive:list')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

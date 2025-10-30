@@ -3,21 +3,32 @@ import { GoogleDriveService } from '../services/googleDriveService'
 
 let driveService: GoogleDriveService | null = null
 
+function initializeDriveService() {
+  if (!driveService) {
+    driveService = new GoogleDriveService()
+  }
+  return driveService
+}
+
 export function registerGoogleDriveHandlers(): void {
-  // Initialize service
-  driveService = new GoogleDriveService()
+  // Don't initialize service here - do it lazily
 
   // Check if authenticated
   ipcMain.handle('drive:is-authenticated', async () => {
-    if (!driveService) return false
-    return await driveService.isAuthenticated()
+    try {
+      const service = initializeDriveService()
+      return await service.isAuthenticated()
+    } catch (error) {
+      console.error('Drive service init error:', error)
+      return false
+    }
   })
 
   // Authenticate
   ipcMain.handle('drive:auth', async () => {
     try {
-      if (!driveService) throw new Error('Drive service not initialized')
-      await driveService.authenticate()
+      const service = initializeDriveService()
+      await service.authenticate()
       return { success: true }
     } catch (error) {
       console.error('Auth error:', error)
@@ -28,8 +39,8 @@ export function registerGoogleDriveHandlers(): void {
   // List files
   ipcMain.handle('drive:list', async () => {
     try {
-      if (!driveService) throw new Error('Drive service not initialized')
-      const files = await driveService.listFiles()
+      const service = initializeDriveService()
+      const files = await service.listFiles()
       return files
     } catch (error) {
       console.error('List files error:', error)
@@ -39,8 +50,13 @@ export function registerGoogleDriveHandlers(): void {
 
   // Logout
   ipcMain.handle('drive:logout', async () => {
-    if (!driveService) throw new Error('Drive service not initialized')
-    await driveService.logout()
-    return { success: true }
+    try {
+      const service = initializeDriveService()
+      await service.logout()
+      return { success: true }
+    } catch (error) {
+      console.error('Logout error:', error)
+      return { success: false, error: (error as Error).message }
+    }
   })
 }
