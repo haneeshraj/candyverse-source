@@ -32,6 +32,7 @@ interface TitlebarAPI {
   onMaximized: (callback: (isMaximized: boolean) => void) => void
 }
 
+// System Info API types
 interface SystemInfoAPI {
   getAppInfo: () => Promise<{
     name: string
@@ -63,11 +64,92 @@ interface SystemInfoAPI {
   }>
 }
 
+// Google Drive File/Folder interface
+interface DriveFile {
+  id: string
+  name: string
+  mimeType: string
+  parents?: string[]
+  createdTime?: string
+  modifiedTime?: string
+  size?: string
+  webViewLink?: string
+  webContentLink?: string
+  iconLink?: string
+  thumbnailLink?: string
+  shared?: boolean
+  owners?: Array<{ displayName: string; emailAddress: string }>
+  permissions?: Array<any>
+  starred?: boolean
+  trashed?: boolean
+  version?: string
+  description?: string
+  [key: string]: any
+}
+
+// Folder contents interface
+interface FolderContents {
+  folders: DriveFile[]
+  files: DriveFile[]
+}
+
+// Google Drive API types
 interface GoogleDriveAPI {
+  // Authentication
   isAuthenticated: () => Promise<boolean>
-  authenticate: () => Promise<{ success: boolean; error?: string }>
+  authenticate: () => Promise<void>
+  logout: () => Promise<void>
+
+  // Folder operations
+  getAllFolders: (pageSize?: number) => Promise<DriveFile[]>
+  getFoldersInFolder: (folderId: string, pageSize?: number) => Promise<DriveFile[]>
+  getRootFolders: (pageSize?: number) => Promise<DriveFile[]>
+  getFolderContents: (folderId?: string) => Promise<FolderContents>
+  createFolder: (name: string, parentId?: string) => Promise<DriveFile>
+
+  // File operations
+  getAllFiles: (pageSize?: number) => Promise<DriveFile[]>
+  getFilesInFolder: (folderId: string, pageSize?: number) => Promise<DriveFile[]>
+  getFileById: (fileId: string) => Promise<DriveFile>
+  searchFiles: (searchTerm: string, pageSize?: number) => Promise<DriveFile[]>
+  getFilesByMimeType: (mimeType: string, pageSize?: number) => Promise<DriveFile[]>
+
+  // Specialized queries
+  getStarredFiles: () => Promise<DriveFile[]>
+  getSharedFiles: () => Promise<DriveFile[]>
+  getRecentFiles: (days?: number) => Promise<DriveFile[]>
+  getTrashedFiles: () => Promise<DriveFile[]>
+
+  // File manipulation
+  uploadFile: (
+    filePath: string,
+    fileName: string,
+    mimeType: string,
+    parentId?: string
+  ) => Promise<DriveFile>
+  downloadFile: (fileId: string, destPath: string) => Promise<void>
+  renameFile: (fileId: string, newName: string) => Promise<DriveFile>
+  moveFile: (fileId: string, newParentId: string) => Promise<DriveFile>
+  copyFile: (fileId: string, newName?: string, parentId?: string) => Promise<DriveFile>
+  deleteFile: (fileId: string) => Promise<void>
+  permanentlyDeleteFile: (fileId: string) => Promise<void>
+  restoreFile: (fileId: string) => Promise<DriveFile>
+  setStarred: (fileId: string, starred: boolean) => Promise<DriveFile>
+
+  // Permissions
+  shareFile: (
+    fileId: string,
+    email: string,
+    role?: 'reader' | 'writer' | 'commenter' | 'owner'
+  ) => Promise<any>
+  getFilePermissions: (fileId: string) => Promise<any[]>
+  removePermission: (fileId: string, permissionId: string) => Promise<void>
+
+  // Storage info
+  getStorageQuota: () => Promise<any>
+
+  // Legacy
   listFiles: () => Promise<Array<{ id: string; name: string }>>
-  logout: () => Promise<{ success: boolean }>
 }
 
 // Extend the Window interface

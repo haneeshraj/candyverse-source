@@ -3,7 +3,6 @@ import { shell, app } from 'electron'
 import * as http from 'http'
 import * as path from 'path'
 import * as fs from 'fs'
-import { drive_v3 } from 'googleapis'
 
 // We'll load electron-store dynamically
 let Store: any
