@@ -152,6 +152,31 @@ interface GoogleDriveAPI {
   listFiles: () => Promise<Array<{ id: string; name: string }>>
 }
 
+// Notification API types
+interface NotificationOptions {
+  title: string
+  body: string
+  subtitle?: string
+  icon?: string
+  silent?: boolean
+  urgency?: 'normal' | 'critical' | 'low'
+  timeoutType?: 'default' | 'never'
+  actions?: Array<{ type: string; text: string }>
+}
+
+interface NotificationAPI {
+  show: (options: NotificationOptions) => Promise<void>
+  onClick: (callback: (data: { title: string; body: string }) => void) => () => void
+  onClose: (callback: (data: { title: string; body: string }) => void) => () => void
+  onAction: (
+    callback: (data: {
+      action: string
+      text: string
+      notification: { title: string; body: string }
+    }) => void
+  ) => () => void
+}
+
 // Extend the Window interface
 declare global {
   interface Window {
@@ -162,5 +187,6 @@ declare global {
     titlebar: TitlebarAPI
     systemInfo: SystemInfoAPI
     googleDrive: GoogleDriveAPI
+    notification: NotificationAPI
   }
 }

@@ -1,0 +1,146 @@
+@use '../../styles/utils/spacing-mixins' as *;
+@use '../../styles/utils/responsive-mixins' as *;
+@use '../../styles/utils/typography-mixins' as *;
+@use '../../styles/variables/spacing' as *;
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  @include heading-3;
+  color: var(--color-text-primary);
+  margin-bottom: $spacing-4;
+  text-align: center;
+}
+
+.description {
+  @include body;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: $spacing-6;
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $spacing-4;
+  margin-bottom: $spacing-6;
+
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.button,
+.buttonUrgent,
+.buttonActions,
+.buttonSilent {
+  @include body;
+  padding: $spacing-4;
+  border: none;
+  border-radius: $radius-md;
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.button {
+  background-color: var(--color-primary);
+  color: white;
+
+  &:hover {
+    background-color: var(--color-primary);
+    filter: brightness(1.1);
+  }
+}
+
+.buttonUrgent {
+  background-color: var(--color-error);
+  color: white;
+
+  &:hover {
+    background-color: var(--color-error);
+    filter: brightness(1.1);
+  }
+}
+
+.buttonActions {
+  background-color: var(--color-info);
+  color: white;
+
+  &:hover {
+    background-color: var(--color-info);
+    filter: brightness(1.1);
+  }
+}
+
+.buttonSilent {
+  background-color: var(--color-text-tertiary);
+  color: white;
+
+  &:hover {
+    background-color: var(--color-text-tertiary);
+    filter: brightness(1.1);
+  }
+}
+
+.successMessage {
+  @include body;
+  padding: $spacing-3;
+  background-color: var(--color-success);
+  color: white;
+  border-radius: $radius-md;
+  text-align: center;
+  margin-bottom: $spacing-4;
+  animation: slideIn 0.3s ease;
+}
+
+.info {
+  background-color: var(--color-background-secondary);
+  padding: $spacing-4;
+  border-radius: $radius-md;
+  border-left: 4px solid var(--color-primary);
+
+  h3 {
+    @include heading-6;
+    color: var(--color-text-primary);
+    margin-bottom: $spacing-3;
+  }
+
+  ul {
+    @include body-small;
+    color: var(--color-text-secondary);
+    margin: 0;
+    padding-left: $spacing-5;
+
+    li {
+      margin-bottom: $spacing-2;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

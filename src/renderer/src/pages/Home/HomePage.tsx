@@ -1,19 +1,60 @@
+import clsx from 'clsx'
+import { LinkIcon } from '@phosphor-icons/react'
+
+import { Card, NotificationDemo } from '@renderer/components'
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
+
+import styles from './styles.module.scss'
 
 function HomePage(): JSX.Element {
   return (
-    <div>
-      <h1>Home Page</h1>
-      <h2>Welcome to your Electron app with routing and animations!</h2>
+    <div className={styles.main}>
+      <h1 className="main-heading">Dashboard</h1>
+      <p className="main-description">Welcome to the application dashboard!</p>
 
-      <h3 style={{ marginTop: '3rem' }}>Features</h3>
-      <ul>
-        <li>React Router with Hash routing for Electron</li>
-        <li>Framer Motion page transitions</li>
-        <li>Theme switching (Light/Dark)</li>
-        <li>Beautiful animations</li>
-        <li>Role-based navigation</li>
-      </ul>
+      <section className={styles['summary-grid']}>
+        <div className={styles['summary-grid__left']}>
+          <Card
+            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
+            title="Card 1"
+            icon={<LinkIcon size={24} />}
+          >
+            <h2>Card Title</h2>
+          </Card>
+          <Card
+            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
+            title="Card 1"
+            icon={<LinkIcon size={24} />}
+          >
+            <h2>Card Title</h2>
+          </Card>
+          <Card
+            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
+            title="Card 1"
+            icon={<LinkIcon size={24} />}
+          >
+            <h2>Card Title</h2>
+          </Card>
+        </div>
+        <div className={styles['summary-grid__right']}>
+          <Card
+            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
+            title="Card 1"
+            icon={<LinkIcon size={24} />}
+          >
+            <h2>Card Title tuties</h2>
+          </Card>
+          <Card
+            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
+            title="Card 1"
+            icon={<LinkIcon size={24} />}
+          >
+            <h2>Card Title</h2>
+          </Card>
+        </div>
+      </section>
+
+      <NotificationDemo />
     </div>
   )
 }

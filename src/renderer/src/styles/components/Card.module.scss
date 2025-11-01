@@ -1,0 +1,21 @@
+@use '../../styles/utils/spacing-mixins' as *;
+@use '../../styles/utils/responsive-mixins' as *;
+@use '../../styles/utils/typography-mixins' as *;
+@use '../../styles/variables/spacing' as *;
+
+.card {
+  padding: $spacing-4;
+
+  &__header {
+    display: flex;
+    background-color: pink;
+  }
+
+  &__title {
+    @include heading-6;
+  }
+
+  &__icon {
+    align-self: center;
+  }
+}

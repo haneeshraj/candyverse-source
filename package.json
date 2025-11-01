@@ -1,9 +1,9 @@
 {
   "name": "candyverse",
-  "version": "1.0.1-beta",
+  "version": "1.0.0-beta",
   "description": "Candy Heist's all-in-one desktop app for website management, personal AI agent and organiser.",
   "main": "./out/main/index.js",
-  "author": "Haneesh Raj Banisetti",
+  "author": "Candy Heist",
   "homepage": "https://candyheist.ca",
   "scripts": {
     "format": "prettier --write .",

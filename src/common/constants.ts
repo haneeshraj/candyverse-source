@@ -32,3 +32,10 @@ export const SYSTEM_INFO_CHANNELS = {
   GET_SYSTEM_INFO: 'system:get-system-info',
   GET_MEMORY_INFO: 'system:get-memory-info'
 } as const
+
+export const NOTIFICATION_CHANNELS = {
+  SHOW: 'notification:show',
+  ON_CLICK: 'notification:click',
+  ON_CLOSE: 'notification:close',
+  ON_ACTION: 'notification:action'
+} as const

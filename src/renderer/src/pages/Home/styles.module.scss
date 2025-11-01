@@ -1,0 +1,54 @@
+@use '../../styles/utils/spacing-mixins' as *;
+@use '../../styles/utils/responsive-mixins' as *;
+@use '../../styles/variables/spacing' as *;
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: $spacing-4;
+
+  height: 70rem;
+  width: 100%;
+  background-color: red;
+  padding: $spacing-4;
+
+  &__left,
+  &__right {
+    background-color: pink;
+  }
+
+  &__left {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: $spacing-4;
+  }
+
+  &__right {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: $spacing-4;
+  }
+
+  &__item {
+    &--1 {
+      background-color: orange;
+    }
+    &--2 {
+      background-color: purple;
+    }
+    &--3 {
+      background-color: blue;
+      grid-row: 2 / 5;
+      grid-column: 1 / 3;
+    }
+    &--4 {
+      background-color: green;
+    }
+    &--5 {
+      background-color: yellow;
+    }
+  }
+}

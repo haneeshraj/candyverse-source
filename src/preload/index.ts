@@ -5,7 +5,8 @@ import {
   SERVER_CHANNELS,
   SYSTEM_INFO_CHANNELS,
   UPDATE_CHANNELS,
-  WINDOW_CHANNELS
+  WINDOW_CHANNELS,
+  NOTIFICATION_CHANNELS
 } from '../common/constants'
 
 const server = {
@@ -159,6 +160,39 @@ const googleDrive = {
   listFiles: () => ipcRenderer.invoke('drive:list')
 }
 
+// Notification API
+interface NotificationOptions {
+  title: string
+  body: string
+  subtitle?: string
+  icon?: string
+  silent?: boolean
+  urgency?: 'normal' | 'critical' | 'low'
+  timeoutType?: 'default' | 'never'
+  actions?: Array<{ type: string; text: string }>
+}
+
+const notification = {
+  show: (options: NotificationOptions) => ipcRenderer.invoke(NOTIFICATION_CHANNELS.SHOW, options),
+  onClick: (callback: (data: any) => void) => {
+    // Remove all previous listeners before adding new one
+    ipcRenderer.removeAllListeners(NOTIFICATION_CHANNELS.ON_CLICK)
+    ipcRenderer.on(NOTIFICATION_CHANNELS.ON_CLICK, (_, data) => callback(data))
+    // Return cleanup function
+    return () => ipcRenderer.removeListener(NOTIFICATION_CHANNELS.ON_CLICK, callback)
+  },
+  onClose: (callback: (data: any) => void) => {
+    ipcRenderer.removeAllListeners(NOTIFICATION_CHANNELS.ON_CLOSE)
+    ipcRenderer.on(NOTIFICATION_CHANNELS.ON_CLOSE, (_, data) => callback(data))
+    return () => ipcRenderer.removeListener(NOTIFICATION_CHANNELS.ON_CLOSE, callback)
+  },
+  onAction: (callback: (data: any) => void) => {
+    ipcRenderer.removeAllListeners(NOTIFICATION_CHANNELS.ON_ACTION)
+    ipcRenderer.on(NOTIFICATION_CHANNELS.ON_ACTION, (_, data) => callback(data))
+    return () => ipcRenderer.removeListener(NOTIFICATION_CHANNELS.ON_ACTION, callback)
+  }
+}
+
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
@@ -171,6 +205,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('titlebar', titlebar)
     contextBridge.exposeInMainWorld('systemInfo', systemInfo)
     contextBridge.exposeInMainWorld('googleDrive', googleDrive)
+    contextBridge.exposeInMainWorld('notification', notification)
   } catch (error) {
     console.error(error)
   }
@@ -189,4 +224,6 @@ if (process.contextIsolated) {
   window.systemInfo = systemInfo
   // @ts-ignore (define in dts)
   window.googleDrive = googleDrive
+  // @ts-ignore (define in dts)
+  window.notification = notification
 }

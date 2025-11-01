@@ -1,0 +1,11 @@
+@use '../../styles/utils/responsive-mixins' as *;
+@use '../../styles/variables/spacing' as *;
+
+.page {
+  padding: $spacing-6;
+  min-height: 100vh;
+
+  @include respond-to(md) {
+    padding: $spacing-8;
+  }
+}
