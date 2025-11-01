@@ -1,0 +1,167 @@
+@use '../variables/breakpoints' as *;
+
+// Media query mixins for responsive design
+// Usage: @include respond-to(md) { ... }
+
+// Min-width breakpoints (mobile-first approach)
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (min-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == xxl {
+    @media (min-width: $breakpoint-xxl) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+// Max-width breakpoints (desktop-first approach)
+@mixin respond-below($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: calc(#{$breakpoint-xs} - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (max-width: calc(#{$breakpoint-sm} - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: calc(#{$breakpoint-md} - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: calc(#{$breakpoint-lg} - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: calc(#{$breakpoint-xl} - 1px)) {
+      @content;
+    }
+  } @else if $breakpoint == xxl {
+    @media (max-width: calc(#{$breakpoint-xxl} - 1px)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+// Between two breakpoints
+@mixin respond-between($min-breakpoint, $max-breakpoint) {
+  $min-width: null;
+  $max-width: null;
+
+  @if $min-breakpoint == xs {
+    $min-width: $breakpoint-xs;
+  } @else if $min-breakpoint == sm {
+    $min-width: $breakpoint-sm;
+  } @else if $min-breakpoint == md {
+    $min-width: $breakpoint-md;
+  } @else if $min-breakpoint == lg {
+    $min-width: $breakpoint-lg;
+  } @else if $min-breakpoint == xl {
+    $min-width: $breakpoint-xl;
+  } @else if $min-breakpoint == xxl {
+    $min-width: $breakpoint-xxl;
+  }
+
+  @if $max-breakpoint == xs {
+    $max-width: calc(#{$breakpoint-xs} - 1px);
+  } @else if $max-breakpoint == sm {
+    $max-width: calc(#{$breakpoint-sm} - 1px);
+  } @else if $max-breakpoint == md {
+    $max-width: calc(#{$breakpoint-md} - 1px);
+  } @else if $max-breakpoint == lg {
+    $max-width: calc(#{$breakpoint-lg} - 1px);
+  } @else if $max-breakpoint == xl {
+    $max-width: calc(#{$breakpoint-xl} - 1px);
+  } @else if $max-breakpoint == xxl {
+    $max-width: calc(#{$breakpoint-xxl} - 1px);
+  }
+
+  @if $min-width and $max-width {
+    @media (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint range: #{$min-breakpoint} to #{$max-breakpoint}";
+  }
+}
+
+// Custom min-width media query
+@mixin respond-min($width) {
+  @media (min-width: $width) {
+    @content;
+  }
+}
+
+// Custom max-width media query
+@mixin respond-max($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}
+
+// Height-based media queries (useful for Electron apps)
+@mixin respond-height-min($height) {
+  @media (min-height: $height) {
+    @content;
+  }
+}
+
+@mixin respond-height-max($height) {
+  @media (max-height: $height) {
+    @content;
+  }
+}
+
+// Orientation-based media queries
+@mixin landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin portrait {
+  @media (orientation: portrait) {
+    @content;
+  }
+}
+
+// Aspect ratio media queries
+@mixin aspect-ratio($ratio) {
+  @media (aspect-ratio: $ratio) {
+    @content;
+  }
+}
+
+@mixin min-aspect-ratio($ratio) {
+  @media (min-aspect-ratio: $ratio) {
+    @content;
+  }
+}
+
+@mixin max-aspect-ratio($ratio) {
+  @media (max-aspect-ratio: $ratio) {
+    @content;
+  }
+}

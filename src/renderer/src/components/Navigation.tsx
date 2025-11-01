@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import clsx from 'clsx'
 
-import { appRoutes } from '../../router/routeConfig'
-import styles from './styles.module.scss'
+import { appRoutes } from '@renderer/router/routeConfig'
+import styles from '@renderer/styles/components/Navigation.module.scss'
 
 function Navigation(): JSX.Element {
   const [_, setIsHovered] = useState(false)

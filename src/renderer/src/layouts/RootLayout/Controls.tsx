@@ -7,8 +7,8 @@ import {
   MinusIcon as MinimizeIcon
 } from '@phosphor-icons/react'
 
-import styles from '../styles.module.scss'
-import ThemeSwitcher from '@renderer/components/ThemeSwitcher/ThemeSwitcher'
+import styles from './styles.module.scss'
+import { ThemeSwitcher } from '@renderer/components'
 
 const closeWindow = () => {
   window.titlebar.close()

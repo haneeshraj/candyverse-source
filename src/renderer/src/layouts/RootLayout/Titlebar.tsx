@@ -1,7 +1,7 @@
 import Controls from './Controls'
 import { useCurrentRoute } from '@renderer/hooks/useCurrentRoute'
 
-import styles from '../styles.module.scss'
+import styles from './styles.module.scss'
 
 const Titlebar = () => {
   const { title, Icon } = useCurrentRoute()

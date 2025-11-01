@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react'
 import clsx from 'clsx'
 
-import Navigation from '@renderer/components/Navigation/Navigation'
-import AnimatedOutlet from '../../components/AnimatedOutlet'
+import { Navigation, AnimatedOutlet } from '@renderer/components'
 import styles from './styles.module.scss'
-import Titlebar from './Components/Titlebar'
+import Titlebar from './Titlebar'
 
 function RootLayout(): JSX.Element {
   const [isSidebarHovered, setIsSidebarHovered] = useState(false)

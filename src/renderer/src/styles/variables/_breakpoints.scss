@@ -1,0 +1,25 @@
+// Breakpoint variables for Electron app responsiveness
+// Based on window minimum width of 600px from windowManager.ts
+
+// Base breakpoints (using min-width approach)
+$breakpoint-xs: 600px; // Minimum window width
+$breakpoint-sm: 768px; // Small screens
+$breakpoint-md: 1024px; // Medium screens
+$breakpoint-lg: 1280px; // Large screens (default window width)
+$breakpoint-xl: 1440px; // Extra large screens
+$breakpoint-xxl: 1920px; // Ultra wide screens
+
+// Container max-widths for different breakpoints
+$container-xs: 100%;
+$container-sm: 72rem;
+$container-md: 96rem;
+$container-lg: 120rem;
+$container-xl: 136rem;
+$container-xxl: 160rem;
+
+// Sidebar widths
+$sidebar-collapsed: 5.4rem;
+$sidebar-expanded: 20rem;
+
+// Titlebar height
+$titlebar-height: 4.8rem;

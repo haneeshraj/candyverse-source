@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import styles from './styles.module.scss'
+import styles from '@renderer/styles/components/ThemeSwitcher.module.scss'
 
 type Theme = 'light' | 'dark'
 

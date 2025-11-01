@@ -1,0 +1,11 @@
+{
+  "protected": [
+    "ThemeSwitcher"
+  ],
+  "customProtection": {
+    "Navigation": {
+      "protected": true,
+      "reason": "literally the most important thing in the project file"
+    }
+  }
+}

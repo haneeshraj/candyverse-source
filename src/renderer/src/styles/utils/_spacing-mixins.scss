@@ -1,0 +1,80 @@
+@use 'sass:map';
+@use '../variables/spacing' as *;
+@use '../variables/breakpoints' as *;
+@use './responsive-mixins' as *;
+
+// Get responsive spacing value
+@function get-spacing($breakpoint, $key) {
+  $breakpoint-map: map.get($spacing-responsive, $breakpoint);
+  @if $breakpoint-map {
+    @return map.get($breakpoint-map, $key);
+  }
+  @warn "Unknown breakpoint or spacing key: #{$breakpoint}, #{$key}";
+  @return null;
+}
+
+// Apply responsive spacing
+// Usage: @include responsive-spacing('padding', 'container-padding');
+@mixin responsive-spacing($property, $key) {
+  #{$property}: get-spacing('xs', $key);
+
+  @include respond-to(sm) {
+    #{$property}: get-spacing('sm', $key);
+  }
+
+  @include respond-to(md) {
+    #{$property}: get-spacing('md', $key);
+  }
+
+  @include respond-to(lg) {
+    #{$property}: get-spacing('lg', $key);
+  }
+
+  @include respond-to(xl) {
+    #{$property}: get-spacing('xl', $key);
+  }
+
+  @include respond-to(xxl) {
+    #{$property}: get-spacing('xxl', $key);
+  }
+}
+
+// Container with responsive padding
+@mixin container($max-width: $container-lg) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  @include responsive-spacing('padding-left', 'container-padding');
+  @include responsive-spacing('padding-right', 'container-padding');
+}
+
+// Responsive gap for flex/grid layouts
+@mixin responsive-gap($size: 'medium') {
+  @include responsive-spacing('gap', 'gap-#{$size}');
+}
+
+// Section spacing (vertical margins/padding)
+@mixin section-spacing($property: 'padding') {
+  @include responsive-spacing('#{$property}-top', 'section-spacing');
+  @include responsive-spacing('#{$property}-bottom', 'section-spacing');
+}
+
+// Card padding
+@mixin card-padding {
+  @include responsive-spacing('padding', 'card-padding');
+}
+
+// Responsive margin/padding utilities
+@mixin spacing($property, $side, $value) {
+  @if $side == 'all' {
+    #{$property}: $value;
+  } @else if $side == 'x' {
+    #{$property}-left: $value;
+    #{$property}-right: $value;
+  } @else if $side == 'y' {
+    #{$property}-top: $value;
+    #{$property}-bottom: $value;
+  } @else {
+    #{$property}-#{$side}: $value;
+  }
+}

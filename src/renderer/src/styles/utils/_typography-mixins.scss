@@ -1,0 +1,153 @@
+@use 'sass:map';
+@use '../variables/typography' as *;
+@use '../variables/breakpoints' as *;
+@use './responsive-mixins' as *;
+
+// Get responsive font size
+@function get-font-size($breakpoint, $style) {
+  $breakpoint-map: map.get($typography-responsive, $breakpoint);
+  @if $breakpoint-map {
+    @return map.get($breakpoint-map, $style);
+  }
+  @warn "Unknown breakpoint or typography style: #{$breakpoint}, #{$style}";
+  @return null;
+}
+
+// Apply responsive typography
+// Usage: @include responsive-font('heading-1');
+@mixin responsive-font($style) {
+  font-size: get-font-size('xs', $style);
+
+  @include respond-to(sm) {
+    font-size: get-font-size('sm', $style);
+  }
+
+  @include respond-to(md) {
+    font-size: get-font-size('md', $style);
+  }
+
+  @include respond-to(lg) {
+    font-size: get-font-size('lg', $style);
+  }
+
+  @include respond-to(xl) {
+    font-size: get-font-size('xl', $style);
+  }
+
+  @include respond-to(xxl) {
+    font-size: get-font-size('xxl', $style);
+  }
+}
+
+// Heading mixins with responsive font sizes
+@mixin heading-1 {
+  @include responsive-font('heading-1');
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+}
+
+@mixin heading-2 {
+  @include responsive-font('heading-2');
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  letter-spacing: $letter-spacing-tight;
+}
+
+@mixin heading-3 {
+  @include responsive-font('heading-3');
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: $letter-spacing-normal;
+}
+
+@mixin heading-4 {
+  @include responsive-font('heading-4');
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: $letter-spacing-normal;
+}
+
+@mixin heading-5 {
+  @include responsive-font('heading-5');
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  letter-spacing: $letter-spacing-normal;
+}
+
+@mixin heading-6 {
+  @include responsive-font('heading-6');
+  font-weight: $font-weight-medium;
+  line-height: $line-height-normal;
+  letter-spacing: $letter-spacing-normal;
+}
+
+// Body text mixins
+@mixin body-large {
+  @include responsive-font('body-large');
+  font-weight: $font-weight-regular;
+  line-height: $line-height-relaxed;
+}
+
+@mixin body {
+  @include responsive-font('body');
+  font-weight: $font-weight-regular;
+  line-height: $line-height-relaxed;
+}
+
+@mixin body-small {
+  @include responsive-font('body-small');
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+}
+
+@mixin caption {
+  @include responsive-font('caption');
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: var(--color-text-secondary);
+}
+
+@mixin overline {
+  @include responsive-font('overline');
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-normal;
+  letter-spacing: $letter-spacing-wider;
+  text-transform: uppercase;
+}
+
+// Truncate text with ellipsis
+@mixin text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Clamp text to specific number of lines
+@mixin text-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Fluid typography (scales between min and max sizes)
+@mixin fluid-font($min-size, $max-size, $min-width: $breakpoint-xs, $max-width: $breakpoint-xxl) {
+  font-size: clamp(
+    #{$min-size},
+    calc(
+      #{$min-size} + (#{strip-unit($max-size)} - #{strip-unit($min-size)}) * ((
+              100vw - #{$min-width}
+            ) / (#{strip-unit($max-width)} - #{strip-unit($min-width)}))
+    ),
+    #{$max-size}
+  );
+}
+
+// Helper function to strip units
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+  @return $number;
+}

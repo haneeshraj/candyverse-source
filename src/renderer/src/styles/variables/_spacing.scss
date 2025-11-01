@@ -1,0 +1,92 @@
+// Spacing scale system
+// Based on 8px grid system (0.8rem with 62.5% base font-size)
+
+// Base spacing unit (8px = 0.8rem)
+$spacing-unit: 0.8rem;
+
+// Spacing scale
+$spacing-0: 0;
+$spacing-1: calc($spacing-unit * 0.5);   // 4px = 0.4rem
+$spacing-2: $spacing-unit;                // 8px = 0.8rem
+$spacing-3: calc($spacing-unit * 1.5);   // 12px = 1.2rem
+$spacing-4: calc($spacing-unit * 2);     // 16px = 1.6rem
+$spacing-5: calc($spacing-unit * 2.5);   // 20px = 2.0rem
+$spacing-6: calc($spacing-unit * 3);     // 24px = 2.4rem
+$spacing-7: calc($spacing-unit * 3.5);   // 28px = 2.8rem
+$spacing-8: calc($spacing-unit * 4);     // 32px = 3.2rem
+$spacing-10: calc($spacing-unit * 5);    // 40px = 4.0rem
+$spacing-12: calc($spacing-unit * 6);    // 48px = 4.8rem
+$spacing-16: calc($spacing-unit * 8);    // 64px = 6.4rem
+$spacing-20: calc($spacing-unit * 10);   // 80px = 8.0rem
+$spacing-24: calc($spacing-unit * 12);   // 96px = 9.6rem
+$spacing-32: calc($spacing-unit * 16);   // 128px = 12.8rem
+
+// Responsive spacing maps for different breakpoints
+// These can be used with the responsive-spacing mixin
+$spacing-responsive: (
+  'xs': (
+    'container-padding': $spacing-4,
+    'section-spacing': $spacing-8,
+    'card-padding': $spacing-4,
+    'gap-small': $spacing-2,
+    'gap-medium': $spacing-4,
+    'gap-large': $spacing-6
+  ),
+  'sm': (
+    'container-padding': $spacing-6,
+    'section-spacing': $spacing-12,
+    'card-padding': $spacing-6,
+    'gap-small': $spacing-3,
+    'gap-medium': $spacing-6,
+    'gap-large': $spacing-8
+  ),
+  'md': (
+    'container-padding': $spacing-8,
+    'section-spacing': $spacing-16,
+    'card-padding': $spacing-8,
+    'gap-small': $spacing-4,
+    'gap-medium': $spacing-8,
+    'gap-large': $spacing-12
+  ),
+  'lg': (
+    'container-padding': $spacing-10,
+    'section-spacing': $spacing-20,
+    'card-padding': $spacing-10,
+    'gap-small': $spacing-4,
+    'gap-medium': $spacing-10,
+    'gap-large': $spacing-16
+  ),
+  'xl': (
+    'container-padding': $spacing-12,
+    'section-spacing': $spacing-24,
+    'card-padding': $spacing-12,
+    'gap-small': $spacing-6,
+    'gap-medium': $spacing-12,
+    'gap-large': $spacing-20
+  ),
+  'xxl': (
+    'container-padding': $spacing-16,
+    'section-spacing': $spacing-32,
+    'card-padding': $spacing-16,
+    'gap-small': $spacing-8,
+    'gap-medium': $spacing-16,
+    'gap-large': $spacing-24
+  )
+);
+
+// Border radius
+$radius-none: 0;
+$radius-sm: 0.4rem;
+$radius-md: 0.8rem;
+$radius-lg: 1.2rem;
+$radius-xl: 1.6rem;
+$radius-full: 9999px;
+
+// Z-index scale
+$z-index-dropdown: 1000;
+$z-index-sticky: 1020;
+$z-index-fixed: 1030;
+$z-index-modal-backdrop: 1040;
+$z-index-modal: 1050;
+$z-index-popover: 1060;
+$z-index-tooltip: 1070;

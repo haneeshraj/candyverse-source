@@ -1,0 +1,211 @@
+// Example: Responsive Card Component
+// This demonstrates how to use the responsive SCSS system
+
+@use '../../styles/utils/responsive-mixins' as *;
+@use '../../styles/utils/typography-mixins' as *;
+@use '../../styles/utils/spacing-mixins' as *;
+@use '../../styles/variables/spacing' as *;
+
+.card {
+  background-color: var(--color-background-secondary);
+  border-radius: $radius-lg;
+  @include card-padding; // Responsive padding
+  transition: all 200ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  }
+
+  &__header {
+    margin-bottom: $spacing-4;
+
+    @include respond-to(md) {
+      margin-bottom: $spacing-6;
+    }
+  }
+
+  &__title {
+    @include heading-4; // Responsive typography
+    color: var(--color-text-primary);
+    margin-bottom: $spacing-2;
+  }
+
+  &__subtitle {
+    @include body-small;
+    color: var(--color-text-secondary);
+  }
+
+  &__content {
+    @include body;
+    color: var(--color-text-primary);
+    margin-bottom: $spacing-6;
+
+    // Limit to 3 lines with ellipsis
+    @include text-clamp(3);
+  }
+
+  &__footer {
+    display: flex;
+    gap: $spacing-4;
+    align-items: center;
+    justify-content: space-between;
+
+    @include respond-below(sm) {
+      flex-direction: column;
+      gap: $spacing-3;
+    }
+  }
+
+  &__button {
+    padding: $spacing-3 $spacing-6;
+    font-size: $font-size-sm;
+    border-radius: $radius-md;
+    border: none;
+    background-color: var(--color-primary-500);
+    color: $color-white;
+    cursor: pointer;
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: var(--color-primary-600);
+    }
+
+    @include respond-to(md) {
+      padding: $spacing-4 $spacing-8;
+      font-size: $font-size-base;
+    }
+  }
+}
+
+// Grid layout example
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  @include responsive-gap('medium');
+
+  // 2 columns on small screens
+  @include respond-to(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // 3 columns on medium screens
+  @include respond-to(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // 4 columns on large screens
+  @include respond-to(xl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Section with responsive spacing
+.section {
+  @include section-spacing;
+  @include container;
+
+  &__header {
+    text-align: center;
+    margin-bottom: $spacing-12;
+
+    @include respond-below(md) {
+      margin-bottom: $spacing-8;
+    }
+  }
+
+  &__title {
+    @include heading-2;
+    margin-bottom: $spacing-4;
+  }
+
+  &__description {
+    @include body-large;
+    color: var(--color-text-secondary);
+    max-width: 72rem;
+    margin: 0 auto;
+  }
+}
+
+// Responsive table
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: $radius-md;
+
+  @include respond-below(md) {
+    margin: 0 (-$spacing-4);
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+
+  @include respond-to(md) {
+    font-size: $font-size-base;
+  }
+
+  th,
+  td {
+    padding: $spacing-3;
+    text-align: left;
+
+    @include respond-to(md) {
+      padding: $spacing-4;
+    }
+
+    @include respond-to(lg) {
+      padding: $spacing-5;
+    }
+  }
+
+  th {
+    @include body-small;
+    font-weight: $font-weight-semibold;
+    color: var(--color-text-secondary);
+    background-color: var(--color-background-secondary);
+  }
+
+  td {
+    @include body-small;
+    color: var(--color-text-primary);
+    border-top: 1px solid var(--color-border-divider);
+  }
+}
+
+// Sidebar content area
+.content-with-sidebar {
+  display: grid;
+  grid-template-columns: 1fr;
+  @include responsive-gap('large');
+
+  @include respond-to(md) {
+    grid-template-columns: 1fr 30rem;
+  }
+
+  @include respond-to(lg) {
+    grid-template-columns: 1fr 36rem;
+  }
+}
+
+// Hero section with fluid typography
+.hero {
+  @include section-spacing;
+  text-align: center;
+
+  &__title {
+    // Smoothly scales from 3.6rem to 9.6rem
+    @include fluid-font(3.6rem, 9.6rem);
+    font-weight: $font-weight-bold;
+    line-height: $line-height-tight;
+    margin-bottom: $spacing-6;
+  }
+
+  &__subtitle {
+    @include body-large;
+    color: var(--color-text-secondary);
+    max-width: 80rem;
+    margin: 0 auto $spacing-8;
+  }
+}

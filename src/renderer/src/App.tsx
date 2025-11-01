@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import ThemeSwitcher from './components/ThemeSwitcher/ThemeSwitcher'
+import { ThemeSwitcher } from './components'
 
 function App(): JSX.Element {
   const [appVersion, setAppVersion] = useState<string>('')
