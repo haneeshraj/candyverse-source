@@ -24,7 +24,6 @@
   }
 
   &:active {
-    background-color: var(--color-surface-active);
     transform: scale(0.95);
   }
 
@@ -37,10 +36,6 @@
     width: 1.6rem;
     height: 1.6rem;
     transition: transform 0.3s ease;
-  }
-
-  &:hover svg {
-    transform: scale(1.1);
   }
 
   &__slider {
@@ -68,8 +63,10 @@
     border-radius: $radius-full;
     cursor: pointer;
     transition: all 0.2s ease;
+    border: none;
+    background-color: transparent;
 
-    svg {
+    & svg {
       width: 1.6rem;
       height: 1.6rem;
       color: var(--color-text-primary);

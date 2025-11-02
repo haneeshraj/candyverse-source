@@ -75,7 +75,7 @@ const AudioToggle = () => {
       </button>
       <AnimatePresence>
         {isOpen && (
-          <motion.label
+          <motion.div
             className={styles['audio-toggle__slider']}
             initial={{
               clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%)',
@@ -113,10 +113,9 @@ const AudioToggle = () => {
               onChange={handleVolume}
               value={volumeLevel}
             />
-          </motion.label>
+          </motion.div>
         )}
       </AnimatePresence>
-      <p>{volumeLevel}</p>
     </>
   )
 }
