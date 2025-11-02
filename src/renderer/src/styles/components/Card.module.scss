@@ -17,5 +17,10 @@
 
   &__icon {
     align-self: center;
+    display: block;
+    margin-left: auto;
+    padding: $spacing-3;
+    border-radius: $radius-full;
+    background-color: red;
   }
 }
