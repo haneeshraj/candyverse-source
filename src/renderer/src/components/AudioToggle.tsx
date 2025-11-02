@@ -99,13 +99,13 @@ const AudioToggle = () => {
           >
             {/* Referred this. Cool as shit. https://codepen.io/giandev10/pen/gbOdEGw */}
 
-            <div className={styles['audio-toggle__play']} onClick={toggleAudio}>
+            <button className={styles['audio-toggle__play']} onClick={toggleAudio}>
               {isPlaying ? <PauseIcon /> : <PlayIcon />}
-            </div>
+            </button>
 
-            <div className={styles['audio-toggle__mute']} onClick={handleMute}>
+            <button className={styles['audio-toggle__mute']} onClick={handleMute}>
               {isMuted ? <SpeakerSlashIcon /> : <SpeakerSimpleHighIcon />}
-            </div>
+            </button>
 
             <input
               type="range"

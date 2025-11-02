@@ -16,10 +16,10 @@ const Card: React.FC<CardProps> = ({ children, className, icon, type = 'default'
   return (
     <div className={clsx(styles.card, styles[`card--${type}`], className)}>
       {(icon || title) && (
-        <div className={styles['card__header']}>
+        <button className={styles['card__header']}>
           {title && <div className={styles['card__title']}>{title}</div>}
           {icon && <div className={styles['card__icon']}>{icon}</div>}
-        </div>
+        </button>
       )}
       {children}
     </div>
