@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import type { ClassValue } from 'clsx'
 import clsx from 'clsx'
 
@@ -10,16 +11,31 @@ interface CardProps {
   icon?: React.ReactNode
   type?: 'default' | 'outlined'
   title?: string
+  to?: string
 }
 
-const Card: React.FC<CardProps> = ({ children, className, icon, type = 'default', title }) => {
+const Card: React.FC<CardProps> = ({
+  children,
+  className,
+  icon,
+  type = 'default',
+  title,
+  to = ''
+}) => {
   return (
     <div className={clsx(styles.card, styles[`card--${type}`], className)}>
       {(icon || title) && (
-        <button className={styles['card__header']}>
+        <div className={styles['card__header']}>
           {title && <div className={styles['card__title']}>{title}</div>}
-          {icon && <div className={styles['card__icon']}>{icon}</div>}
-        </button>
+          {icon &&
+            (to ? (
+              <Link className={styles['card__icon']} to={to}>
+                {icon}
+              </Link>
+            ) : (
+              <div className={styles['card__icon']}>{icon}</div>
+            ))}
+        </div>
       )}
       {children}
     </div>

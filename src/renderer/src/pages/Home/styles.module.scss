@@ -10,13 +10,6 @@
 
   height: 70rem;
   width: 100%;
-  background-color: red;
-  padding: $spacing-4;
-
-  &__left,
-  &__right {
-    background-color: pink;
-  }
 
   &__left {
     display: grid;

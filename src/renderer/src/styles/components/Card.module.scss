@@ -5,6 +5,7 @@
 
 .card {
   padding: $spacing-4;
+  border-radius: $radius-lg;
 
   &__header {
     display: flex;
@@ -21,6 +22,9 @@
     padding: $spacing-3;
     border-radius: $radius-full;
 
-    border: 1px solid var(--color-border);
+    // fucking annoying ahh style resets
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
   }
 }

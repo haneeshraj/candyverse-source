@@ -29,7 +29,7 @@ function HomePage(): JSX.Element {
             <h2>Card Title</h2>
           </Card>
           <Card
-            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
+            className={clsx(styles['summary-grid__item'], styles['summary-grid__item--3'])}
             title="Card 1"
             icon={<LinkIcon size={24} />}
           >
@@ -53,8 +53,6 @@ function HomePage(): JSX.Element {
           </Card>
         </div>
       </section>
-
-      <NotificationDemo />
     </div>
   )
 }

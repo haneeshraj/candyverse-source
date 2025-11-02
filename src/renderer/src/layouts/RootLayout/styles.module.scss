@@ -4,7 +4,7 @@
 @use '../../styles/variables/breakpoints' as *;
 
 .main {
-  margin-block: $titlebar-height;
+  margin-top: $titlebar-height;
   transition: margin-left 300ms ease-in-out;
 
   &--sidebar-collapsed {
@@ -20,6 +20,7 @@
   @include container($container-lg);
   min-height: calc(100vh - $titlebar-height);
   padding-top: $spacing-6;
+  padding-bottom: $spacing-6;
 
   @include respond-to(md) {
     padding-top: $spacing-8;
