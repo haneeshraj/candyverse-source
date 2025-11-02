@@ -1,16 +1,17 @@
 import { RouteObject } from 'react-router-dom'
-import { HouseIcon, IconProps } from '@phosphor-icons/react'
+import { HouseIcon, IconProps, ListChecksIcon } from '@phosphor-icons/react'
 
 import RootLayout from '../layouts/RootLayout/RootLayout'
 import HomePage from '../pages/Home/HomePage'
 import NotFoundPage from '../pages/NotFound/NotFoundPage'
 import React from 'react'
+import { TasksPage } from '@renderer/pages/index'
 
 export interface RouteHandle {
   title: string
   icon: React.ComponentType<IconProps>
   showInNav?: boolean
-  category?: 'general' | 'branding' | 'app' | 'web' | 'auth' | 'admin'
+  category?: 'general'
 }
 
 // Define routes for main navigation
@@ -21,6 +22,16 @@ export const appRoutes = [
     handle: {
       title: 'Home',
       icon: HouseIcon,
+      showInNav: true,
+      category: 'general'
+    } as RouteHandle
+  },
+  {
+    path: 'tasks',
+    element: <TasksPage />,
+    handle: {
+      title: 'Tasks',
+      icon: ListChecksIcon,
       showInNav: true,
       category: 'general'
     } as RouteHandle
@@ -39,6 +50,16 @@ export const routeConfig: RouteObject[] = [
         handle: {
           title: 'Home',
           icon: HouseIcon,
+          showInNav: true,
+          category: 'general'
+        } as RouteHandle
+      },
+      {
+        path: 'tasks',
+        element: <TasksPage />,
+        handle: {
+          title: 'Tasks',
+          icon: ListChecksIcon,
           showInNav: true,
           category: 'general'
         } as RouteHandle

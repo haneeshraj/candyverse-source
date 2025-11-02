@@ -17,7 +17,7 @@
 }
 
 .layout {
-  @include container($container-lg);
+  @include container($container-xxl);
   min-height: calc(100vh - $titlebar-height);
   padding-top: $spacing-6;
   padding-bottom: $spacing-6;

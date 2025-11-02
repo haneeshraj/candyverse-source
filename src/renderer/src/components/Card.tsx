@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { IconProps } from '@phosphor-icons/react'
 import type { ClassValue } from 'clsx'
 import clsx from 'clsx'
 
@@ -8,33 +8,29 @@ import styles from '@renderer/styles/components/Card.module.scss'
 interface CardProps {
   children: React.ReactNode
   className?: ClassValue
-  icon?: React.ReactNode
+  icons?: {
+    icon: React.ComponentType<IconProps>
+    action?: () => void
+  }[]
   type?: 'default' | 'outlined'
   title?: string
-  to?: string
 }
 
-const Card: React.FC<CardProps> = ({
-  children,
-  className,
-  icon,
-  type = 'default',
-  title,
-  to = ''
-}) => {
+const Card: React.FC<CardProps> = ({ children, className, icons, type = 'default', title }) => {
   return (
     <div className={clsx(styles.card, styles[`card--${type}`], className)}>
-      {(icon || title) && (
+      {(icons || title) && (
         <div className={styles['card__header']}>
           {title && <div className={styles['card__title']}>{title}</div>}
-          {icon &&
-            (to ? (
-              <Link className={styles['card__icon']} to={to}>
-                {icon}
-              </Link>
-            ) : (
-              <div className={styles['card__icon']}>{icon}</div>
-            ))}
+          {icons && (
+            <div className={styles['card__icons-container']}>
+              {icons.map(({ icon: Icon, action }, idx) => (
+                <div key={idx} className={styles['card__icon']} onClick={action}>
+                  <Icon size={20} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
       {children}

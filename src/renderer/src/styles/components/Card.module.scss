@@ -4,27 +4,67 @@
 @use '../../styles/variables/spacing' as *;
 
 .card {
-  padding: $spacing-4;
+  padding: 1.2rem 2.4rem;
+  padding-right: 2rem;
   border-radius: $radius-lg;
+  background-color: var(--color-background-secondary);
+
+  &--default,
+  &--outlined {
+    .card__icon {
+      background-color: var(--color-background-secondary);
+
+      &:hover {
+        background-color: var(--color-background-primary);
+      }
+    }
+  }
+
+  &--outlined {
+    border: 1px solid var(--color-border-divider);
+  }
 
   &__header {
     display: flex;
+    align-items: center;
   }
 
   &__title {
     @include heading-6;
   }
 
-  &__icon {
-    align-self: center;
-    display: block;
+  &__icons-container {
+    display: flex;
     margin-left: auto;
-    padding: $spacing-3;
-    border-radius: $radius-full;
+    gap: $spacing-1;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-1;
+    border-radius: $radius-sm;
+
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease;
 
     // fucking annoying ahh style resets
     cursor: pointer;
     border: none;
     background-color: transparent;
+
+    svg {
+      color: var(--color-text-tertiary);
+      transition: color 0.3s ease;
+    }
+
+    &:hover {
+      svg {
+        color: var(--color-text-primary);
+      }
+    }
   }
 }

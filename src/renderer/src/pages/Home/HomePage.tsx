@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { LinkIcon } from '@phosphor-icons/react'
 
-import { Card, NotificationDemo } from '@renderer/components'
+import { Card } from '@renderer/components'
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
 
 import styles from './styles.module.scss'
@@ -17,21 +17,21 @@ function HomePage(): JSX.Element {
           <Card
             className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
             title="Card 1"
-            icon={<LinkIcon size={24} />}
+            icons={[{ icon: LinkIcon }, { icon: LinkIcon }]}
           >
             <h2>Card Title</h2>
           </Card>
           <Card
             className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
             title="Card 1"
-            icon={<LinkIcon size={24} />}
+            icons={[{ icon: LinkIcon }]}
           >
             <h2>Card Title</h2>
           </Card>
           <Card
             className={clsx(styles['summary-grid__item'], styles['summary-grid__item--3'])}
             title="Card 1"
-            icon={<LinkIcon size={24} />}
+            icons={[{ icon: LinkIcon }]}
           >
             <h2>Card Title</h2>
           </Card>
@@ -40,14 +40,15 @@ function HomePage(): JSX.Element {
           <Card
             className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
             title="Card 1"
-            icon={<LinkIcon size={24} />}
+            icons={[{ icon: LinkIcon }]}
           >
             <h2>Card Title tuties</h2>
           </Card>
           <Card
             className={clsx(styles['summary-grid__item'], styles['summary-grid__item--1'])}
             title="Card 1"
-            icon={<LinkIcon size={24} />}
+            type="outlined"
+            icons={[{ icon: LinkIcon }]}
           >
             <h2>Card Title</h2>
           </Card>
