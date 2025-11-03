@@ -4,7 +4,7 @@ import { LinkIcon } from '@phosphor-icons/react'
 import { Card } from '@renderer/components'
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
 
-import styles from './styles.module.scss'
+import styles from '@renderer/styles/page/HomePage.module.scss'
 
 function HomePage(): JSX.Element {
   return (

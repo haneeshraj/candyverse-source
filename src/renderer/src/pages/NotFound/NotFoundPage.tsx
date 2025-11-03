@@ -1,7 +1,7 @@
 // src/pages/NotFoundPage.tsx
 import { withPageTransition } from '../../components/AnimatedOutlet'
 import { useNavigate } from 'react-router-dom'
-import styles from './styles.module.scss'
+import styles from '@renderer/styles/page/NotFoundPage.module.scss'
 
 function NotFoundPage() {
   const navigate = useNavigate()

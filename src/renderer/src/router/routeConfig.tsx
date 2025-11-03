@@ -2,10 +2,9 @@ import { RouteObject } from 'react-router-dom'
 import { HouseIcon, IconProps, ListChecksIcon } from '@phosphor-icons/react'
 
 import RootLayout from '../layouts/RootLayout/RootLayout'
-import HomePage from '../pages/Home/HomePage'
-import NotFoundPage from '../pages/NotFound/NotFoundPage'
+
 import React from 'react'
-import { TasksPage } from '@renderer/pages/index'
+import { TasksPage, HomePage, NotFoundPage } from '@renderer/pages/index'
 
 export interface RouteHandle {
   title: string
