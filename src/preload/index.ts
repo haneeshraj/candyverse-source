@@ -6,7 +6,8 @@ import {
   SYSTEM_INFO_CHANNELS,
   UPDATE_CHANNELS,
   WINDOW_CHANNELS,
-  NOTIFICATION_CHANNELS
+  NOTIFICATION_CHANNELS,
+  GITHUB_CHANNELS
 } from '../common/constants'
 
 const server = {
@@ -69,6 +70,9 @@ const app = {
   getAppVersion: () => ipcRenderer.invoke(APP_CHANNELS.GET_VERSION),
   getAppPath: (name: string) => {
     return ipcRenderer.invoke(APP_CHANNELS.GET_PATH, name)
+  },
+  openExternal: (url: string) => {
+    ipcRenderer.send(APP_CHANNELS.OPEN_EXTERNAL, url)
   }
 }
 
@@ -193,6 +197,12 @@ const notification = {
   }
 }
 
+// GitHub API
+const github = {
+  getAllReleases: () => ipcRenderer.invoke(GITHUB_CHANNELS.GET_ALL_RELEASES),
+  getLatestRelease: () => ipcRenderer.invoke(GITHUB_CHANNELS.GET_LATEST_RELEASE)
+}
+
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
@@ -206,6 +216,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('systemInfo', systemInfo)
     contextBridge.exposeInMainWorld('googleDrive', googleDrive)
     contextBridge.exposeInMainWorld('notification', notification)
+    contextBridge.exposeInMainWorld('github', github)
   } catch (error) {
     console.error(error)
   }
@@ -226,4 +237,6 @@ if (process.contextIsolated) {
   window.googleDrive = googleDrive
   // @ts-ignore (define in dts)
   window.notification = notification
+  // @ts-ignore (define in dts)
+  window.github = github
 }

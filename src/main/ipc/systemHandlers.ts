@@ -1,4 +1,4 @@
-import { ipcMain, app } from 'electron'
+import { ipcMain, app, shell } from 'electron'
 import { getMainWindow } from '../windowManager'
 import { APP_CHANNELS, WINDOW_CHANNELS } from '../../common/constants'
 
@@ -34,5 +34,14 @@ export function registerSystemHandlers(): void {
       throw new Error('Path name is required')
     }
     return app.getPath(name as any)
+  })
+
+  // Open external URL
+  ipcMain.on(APP_CHANNELS.OPEN_EXTERNAL, (_, url: string) => {
+    if (url && typeof url === 'string') {
+      shell.openExternal(url).catch((error) => {
+        console.error('Failed to open external URL:', error)
+      })
+    }
   })
 }

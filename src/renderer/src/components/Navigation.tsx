@@ -33,7 +33,7 @@ function Navigation(): JSX.Element {
   )
 
   // Define category order (removed 'auth' and 'admin')
-  const categoryOrder = ['general']
+  const categoryOrder = ['general', 'app']
 
   return (
     <aside

@@ -22,6 +22,7 @@ interface UpdaterAPI {
 interface AppAPI {
   getAppVersion: () => Promise<string>
   getAppPath: (name: string) => Promise<string>
+  openExternal: (url: string) => void
 }
 
 // Titlebar API types
@@ -177,6 +178,22 @@ interface NotificationAPI {
   ) => () => void
 }
 
+// GitHub API types
+interface GitHubRelease {
+  version: string
+  name: string
+  body: string
+  publishedAt: string
+  htmlUrl: string
+  prerelease: boolean
+  draft: boolean
+}
+
+interface GitHubAPI {
+  getAllReleases: () => Promise<GitHubRelease[]>
+  getLatestRelease: () => Promise<Omit<GitHubRelease, 'draft'>>
+}
+
 // Extend the Window interface
 declare global {
   interface Window {
@@ -188,5 +205,6 @@ declare global {
     systemInfo: SystemInfoAPI
     googleDrive: GoogleDriveAPI
     notification: NotificationAPI
+    github: GitHubAPI
   }
 }

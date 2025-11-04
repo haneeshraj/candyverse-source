@@ -7,7 +7,8 @@ export const WINDOW_CHANNELS = {
 
 export const APP_CHANNELS = {
   GET_VERSION: 'app:get-version',
-  GET_PATH: 'app:getPath'
+  GET_PATH: 'app:getPath',
+  OPEN_EXTERNAL: 'app:open-external'
 } as const
 
 export const SERVER_CHANNELS = {
@@ -38,4 +39,9 @@ export const NOTIFICATION_CHANNELS = {
   ON_CLICK: 'notification:click',
   ON_CLOSE: 'notification:close',
   ON_ACTION: 'notification:action'
+} as const
+
+export const GITHUB_CHANNELS = {
+  GET_ALL_RELEASES: 'github:get-all-releases',
+  GET_LATEST_RELEASE: 'github:get-latest-release'
 } as const
