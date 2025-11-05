@@ -8,7 +8,7 @@ import styles from '@renderer/styles/components/Card.module.scss'
 interface CardIcon {
   icon: React.ComponentType<IconProps>
   action?: () => void
-  align: 'left' | 'right'
+  align?: 'left' | 'right'
 }
 
 interface CardProps {
@@ -20,14 +20,22 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ children, className, icons, type = 'default', title }) => {
+  const normalizedIcons = icons?.map((icon) => ({
+    ...icon,
+    align: icon.align || 'right'
+  })) as Required<CardIcon>[]
+
+  const leftIcons = normalizedIcons?.filter((icon) => icon.align === 'left').slice(0, 1) || []
+  const rightIcons = normalizedIcons?.filter((icon) => icon.align === 'right').slice(0, 5) || []
+
   // Validate and filter icons
-  const leftIcons = icons?.filter((icon) => icon.align === 'left').slice(0, 1) || []
-  const rightIcons = icons?.filter((icon) => icon.align === 'right').slice(0, 5) || []
+  // const leftIcons = icons?.filter((icon) => icon.align === 'left').slice(0, 1) || []
+  // const rightIcons = icons?.filter((icon) => icon.align === 'right').slice(0, 5) || []
 
   // Warning in development
-  if (process.env.NODE_ENV === 'development' && icons) {
-    const leftCount = icons.filter((icon) => icon.align === 'left').length
-    const rightCount = icons.filter((icon) => icon.align === 'right').length
+  if (process.env.NODE_ENV === 'development' && normalizedIcons) {
+    const leftCount = normalizedIcons.filter((icon) => icon.align === 'left').length
+    const rightCount = normalizedIcons.filter((icon) => icon.align === 'right').length
 
     if (leftCount > 1) {
       console.warn(
@@ -40,7 +48,6 @@ const Card: React.FC<CardProps> = ({ children, className, icons, type = 'default
       )
     }
   }
-
   return (
     <div className={clsx(styles.card, styles[`card--${type}`], className)}>
       {(leftIcons.length > 0 || rightIcons.length > 0 || title) && (

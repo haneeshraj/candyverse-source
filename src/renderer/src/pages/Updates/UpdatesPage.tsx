@@ -1,8 +1,9 @@
 import styles from '@renderer/styles/page/UpdatesPage.module.scss'
 
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
-import { Card } from '@renderer/components'
+import { Card, Dropdown } from '@renderer/components'
 import { GitMergeIcon, NoteIcon, ArrowSquareOutIcon } from '@phosphor-icons/react'
+import ReactMarkdown from 'react-markdown'
 import { useEffect, useState } from 'react'
 
 interface AppInfo {
@@ -42,6 +43,7 @@ const UpdatesPage = () => {
   const [releases, setReleases] = useState<GitHubRelease[]>([])
   const [releasesLoading, setReleasesLoading] = useState(true)
   const [releasesError, setReleasesError] = useState<string | null>(null)
+  const [selectedRelease, setSelectedRelease] = useState<GitHubRelease | null>(null)
 
   useEffect(() => {
     const getAppInfo = async () => {
@@ -71,7 +73,6 @@ const UpdatesPage = () => {
         setReleasesLoading(true)
         setReleasesError(null)
 
-        // Check if GitHub API is available
         if (!window.github) {
           throw new Error(
             'GitHub API not available. Please restart the application to load the latest updates.'
@@ -80,6 +81,11 @@ const UpdatesPage = () => {
 
         const allReleases = await window.github.getAllReleases()
         setReleases(allReleases)
+
+        // Set the first release as selected
+        if (allReleases.length > 0) {
+          setSelectedRelease(allReleases[0])
+        }
       } catch (error) {
         console.error('Failed to fetch releases:', error)
         setReleasesError(error instanceof Error ? error.message : 'Failed to fetch releases')
@@ -230,43 +236,44 @@ const UpdatesPage = () => {
             <p>No releases found.</p>
           ) : (
             <div className={styles['releases']}>
-              {releases.map((release) => (
-                <div key={release.version} className={styles['release']}>
-                  <div className={styles['release__header']}>
-                    <h3 className={styles['release__title']}>
-                      {release.name}
-                      {release.prerelease && (
-                        <span className={styles['release__badge']}>Pre-release</span>
-                      )}
-                    </h3>
-                    <div className={styles['release__meta']}>
-                      <span className={styles['release__version']}>{release.version}</span>
-                      <span className={styles['release__date']}>
-                        {new Date(release.publishedAt).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}
-                      </span>
-                    </div>
-                  </div>
-                  <div className={styles['release__body']}>
-                    <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}>
-                      {release.body}
-                    </pre>
-                  </div>
-                  <a
-                    href="#"
-                    className={styles['release__link']}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      window.app.openExternal(release.htmlUrl)
-                    }}
+              <Dropdown
+                items={releases.map((release) => ({
+                  label: `${release.name} (${release.version})`,
+                  value: release.version,
+                  action: () => {
+                    setSelectedRelease(release)
+                  },
+                  isDefault: release === releases[0]
+                }))}
+                placeholder="Select a release version"
+                defaultValue={releases[0].version}
+                className={styles['releases__dropdown']}
+                onChange={(value) => {
+                  const selected = releases.find((r) => r.version === value)
+                  if (selected) {
+                    setSelectedRelease(selected)
+                  }
+                }}
+              />
+
+              {selectedRelease && (
+                <div className={styles['releases__details']}>
+                  <pre
+                    className={styles['releases__body']}
+                    style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
                   >
-                    View on GitHub →
-                  </a>
+                    <div className={styles['releases__external-link']}>
+                      <ArrowSquareOutIcon
+                        onClick={() => {
+                          window.app.openExternal(selectedRelease.htmlUrl)
+                        }}
+                        size={16}
+                      />
+                    </div>
+                    <ReactMarkdown>{selectedRelease.body}</ReactMarkdown>
+                  </pre>
                 </div>
-              ))}
+              )}
             </div>
           )}
         </Card>
