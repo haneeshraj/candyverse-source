@@ -26,9 +26,6 @@
     gap: 1rem;
   }
 
-  &__patch-notes {
-  }
-
   &__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -53,6 +50,97 @@
     font-size: 1.2rem;
   }
 }
+
+.update-controls {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  padding: $spacing-2;
+
+  &__status {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+
+    p {
+      font-size: $font-size-lg;
+      margin: 0;
+    }
+  }
+
+  &__version {
+    display: flex;
+    gap: $spacing-3;
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+
+    span {
+      padding: $spacing-1 $spacing-2;
+      background-color: var(--color-surface);
+      border-radius: $radius-sm;
+    }
+  }
+
+  &__latest {
+    color: var(--color-primary) !important;
+    font-weight: $font-weight-semibold;
+  }
+
+  &__progress {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--color-surface);
+    border-radius: $radius-full;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    height: 100%;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease;
+    border-radius: $radius-full;
+  }
+
+  &__progress-text {
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    text-align: center;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
+  }
+
+  &__notes {
+    padding: $spacing-3;
+    background-color: var(--color-surface);
+    border-radius: $radius-md;
+    border: 1px solid var(--color-border-secondary);
+
+    h4 {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-semibold;
+      margin-bottom: $spacing-2;
+      color: var(--color-text-primary);
+    }
+
+    p {
+      font-size: $font-size-sm;
+      color: var(--color-text-secondary);
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+}
+
 .releases {
   padding-block: $spacing-4;
 
@@ -61,15 +149,13 @@
     margin-bottom: $spacing-4;
   }
 
-  &__versions {
-  }
-
   &__details {
     border-radius: $radius-md;
     height: 55rem;
     padding: $spacing-4;
     overflow-y: auto;
     border: 1px solid var(--color-border-secondary);
+    background-color: var(--color-background-primary);
 
     // Hide scrollbar for Chrome, Safari and Opera
     &::-webkit-scrollbar {
@@ -98,10 +184,6 @@
     ol {
       margin-left: 5rem;
       padding-left: 0.5rem;
-    }
-
-    li {
-      // margin-bottom: 0.5rem;
     }
   }
 

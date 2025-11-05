@@ -17,6 +17,15 @@ if (GH_TOKEN) {
 
 export function registerUpdateHandlers(): void {
   // User-triggered actions
+  ipcMain.handle(UPDATE_CHANNELS.CHECK, async () => {
+    try {
+      await checkForUpdates()
+      return { success: true }
+    } catch (error) {
+      return { success: false, error: (error as Error).message }
+    }
+  })
+
   ipcMain.handle(UPDATE_CHANNELS.DOWNLOAD, async () => {
     try {
       await autoUpdater.downloadUpdate()

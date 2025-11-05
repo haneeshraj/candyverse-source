@@ -2,7 +2,12 @@ import styles from '@renderer/styles/page/UpdatesPage.module.scss'
 
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
 import { Card, Dropdown } from '@renderer/components'
-import { GitMergeIcon, NoteIcon, ArrowSquareOutIcon } from '@phosphor-icons/react'
+import {
+  GitMergeIcon,
+  NoteIcon,
+  ArrowSquareOutIcon,
+  PlugsConnectedIcon
+} from '@phosphor-icons/react'
 import ReactMarkdown from 'react-markdown'
 import { useEffect, useState } from 'react'
 
@@ -45,6 +50,14 @@ const UpdatesPage = () => {
   const [releasesError, setReleasesError] = useState<string | null>(null)
   const [selectedRelease, setSelectedRelease] = useState<GitHubRelease | null>(null)
 
+  // Update status state
+  const [updateStatus, setUpdateStatus] = useState<
+    'idle' | 'checking' | 'available' | 'not-available' | 'downloading' | 'downloaded' | 'error'
+  >('idle')
+  const [updateInfo, setUpdateInfo] = useState<any>(null)
+  const [downloadProgress, setDownloadProgress] = useState(0)
+  const [updateError, setUpdateError] = useState<string | null>(null)
+
   useEffect(() => {
     const getAppInfo = async () => {
       try {
@@ -65,6 +78,38 @@ const UpdatesPage = () => {
     }
 
     getAppInfo()
+  }, [])
+
+  // Set up update listeners
+  useEffect(() => {
+    window.updater.onCheckingForUpdate(() => {
+      setUpdateStatus('checking')
+      setUpdateError(null)
+    })
+
+    window.updater.onUpdateAvailable((info) => {
+      setUpdateStatus('available')
+      setUpdateInfo(info)
+    })
+
+    window.updater.onUpdateNotAvailable(() => {
+      setUpdateStatus('not-available')
+    })
+
+    window.updater.onDownloadProgress((progress) => {
+      setUpdateStatus('downloading')
+      setDownloadProgress(Math.round(progress.percent))
+    })
+
+    window.updater.onUpdateDownloaded((info) => {
+      setUpdateStatus('downloaded')
+      setUpdateInfo(info)
+    })
+
+    window.updater.onError((error) => {
+      setUpdateStatus('error')
+      setUpdateError(error)
+    })
   }, [])
 
   useEffect(() => {
@@ -96,6 +141,52 @@ const UpdatesPage = () => {
 
     fetchReleases()
   }, [])
+
+  const handleDownloadUpdate = () => {
+    window.updater.download()
+  }
+
+  const handleInstallUpdate = () => {
+    window.updater.install()
+  }
+
+  const getStatusMessage = () => {
+    switch (updateStatus) {
+      case 'checking':
+        return '🔍 Checking for updates...'
+      case 'available':
+        return `✨ Update available: ${updateInfo?.version || 'New version'}`
+      case 'not-available':
+        return '✅ You are up to date!'
+      case 'downloading':
+        return `⬇️ Downloading update... ${downloadProgress}%`
+      case 'downloaded':
+        return '✅ Update ready to install!'
+      case 'error':
+        return `❌ Error: ${updateError || 'Update check failed'}`
+      default:
+        return 'Ready to check for updates'
+    }
+  }
+
+  const getStatusColor = () => {
+    switch (updateStatus) {
+      case 'checking':
+        return 'var(--color-info)'
+      case 'available':
+        return 'var(--color-primary)'
+      case 'not-available':
+        return 'var(--color-success)'
+      case 'downloading':
+        return 'var(--color-warning)'
+      case 'downloaded':
+        return 'var(--color-success)'
+      case 'error':
+        return 'var(--color-error)'
+      default:
+        return 'var(--color-text-secondary)'
+    }
+  }
 
   return (
     <div>
@@ -194,8 +285,84 @@ const UpdatesPage = () => {
               <p>Failed to load system information</p>
             )}
           </Card>
-          <Card className={styles['updates__actions']} type="outlined">
-            <button className="btn btn-primary w-full">Check for updates</button>
+          <Card
+            className={styles['updates__actions']}
+            type="outlined"
+            title="Update Controls"
+            icons={[
+              {
+                icon: PlugsConnectedIcon,
+                align: 'left'
+              }
+            ]}
+          >
+            <div className={styles['update-controls']}>
+              {/* Status Display */}
+              <div className={styles['update-controls__status']}>
+                <p style={{ color: getStatusColor(), fontWeight: 'var(--font-weight-semibold)' }}>
+                  {getStatusMessage()}
+                </p>
+
+                {/* Version Info */}
+                {appInfo && (
+                  <div className={styles['update-controls__version']}>
+                    <span>Current: v{appInfo.version}</span>
+                    {updateInfo?.version && (
+                      <span className={styles['update-controls__latest']}>
+                        Latest: v{updateInfo.version}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Download Progress Bar */}
+              {updateStatus === 'downloading' && (
+                <div className={styles['update-controls__progress']}>
+                  <div className={styles['update-controls__progress-bar']}>
+                    <div
+                      className={styles['update-controls__progress-fill']}
+                      style={{ width: `${downloadProgress}%` }}
+                    />
+                  </div>
+                  <span className={styles['update-controls__progress-text']}>
+                    {downloadProgress}%
+                  </span>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className={styles['update-controls__actions']}>
+                {updateStatus === 'available' && (
+                  <button className="btn btn-primary w-full" onClick={handleDownloadUpdate}>
+                    Download Update
+                  </button>
+                )}
+
+                {updateStatus === 'downloaded' && (
+                  <button className="btn btn-success w-full" onClick={handleInstallUpdate}>
+                    Install & Restart
+                  </button>
+                )}
+
+                {updateStatus === 'downloading' && (
+                  <button className="btn btn-secondary w-full" disabled>
+                    Downloading...
+                  </button>
+                )}
+
+                {(updateStatus === 'idle' ||
+                  updateStatus === 'not-available' ||
+                  updateStatus === 'error') && (
+                  <button
+                    className="btn btn-primary w-full"
+                    onClick={() => window.updater.checkForUpdates()}
+                  >
+                    Check for Updates
+                  </button>
+                )}
+              </div>
+            </div>
           </Card>
         </div>
         <Card

@@ -17,6 +17,7 @@ export const SERVER_CHANNELS = {
 } as const
 
 export const UPDATE_CHANNELS = {
+  CHECK: 'update:check',
   DOWNLOAD: 'update:download',
   INSTALL: 'update:install',
 

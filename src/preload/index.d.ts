@@ -14,6 +14,7 @@ interface UpdaterAPI {
   onDownloadProgress: (callback: (progress: any) => void) => void
   onUpdateDownloaded: (callback: (info: any) => void) => void
   onError: (callback: (error: any) => void) => void
+  checkForUpdates: () => Promise<void>
   download: () => Promise<void>
   install: () => Promise<void>
 }

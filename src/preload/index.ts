@@ -56,6 +56,10 @@ const updater = {
     })
   },
 
+  checkForUpdates: () => {
+    ipcRenderer.invoke(UPDATE_CHANNELS.CHECK)
+  },
+
   download: () => {
     ipcRenderer.invoke(UPDATE_CHANNELS.DOWNLOAD)
   },
