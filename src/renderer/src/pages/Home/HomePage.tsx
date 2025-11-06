@@ -27,9 +27,9 @@ function HomePage(): JSX.Element {
               value: 'idk gang 2'
             },
             {
-              label: 'test 3',
+              label: 'PLEASEWORK PLEASE WORK',
               action: () => console.log('testing type 3'),
-              value: 'idk gang 3'
+              value: 'PLEASE WOK PLEASE WORK'
             }
           ]}
         />

@@ -1,15 +1,29 @@
-import styles from '@renderer/styles/page/UpdatesPage.module.scss'
+// Core Libraries (React)
+import { useEffect, useState } from 'react'
 
-import { withPageTransition } from '@renderer/components/AnimatedOutlet'
-import { Card, Dropdown } from '@renderer/components'
+// Third-Party Libraries
+import ReactMarkdown from 'react-markdown'
+import { motion, AnimatePresence } from 'motion/react'
 import {
   GitMergeIcon,
   NoteIcon,
   ArrowSquareOutIcon,
-  PlugsConnectedIcon
+  PlugsConnectedIcon,
+  ArrowsClockwiseIcon,
+  MagnifyingGlassIcon,
+  RocketLaunchIcon,
+  DownloadSimpleIcon,
+  SealCheckIcon,
+  ShieldCheckIcon,
+  XCircleIcon
 } from '@phosphor-icons/react'
-import ReactMarkdown from 'react-markdown'
-import { useEffect, useState } from 'react'
+
+// @ based imports (path aliases)
+import { withPageTransition } from '@renderer/components/AnimatedOutlet'
+import { Card, Dropdown } from '@renderer/components'
+
+// ./ or ../ based imports (relative imports)
+import styles from '@renderer/styles/page/UpdatesPage.module.scss'
 
 interface AppInfo {
   // From systemInfo.getAppInfo()
@@ -150,25 +164,6 @@ const UpdatesPage = () => {
     window.updater.install()
   }
 
-  const getStatusMessage = () => {
-    switch (updateStatus) {
-      case 'checking':
-        return '🔍 Checking for updates...'
-      case 'available':
-        return `✨ Update available: ${updateInfo?.version || 'New version'}`
-      case 'not-available':
-        return '✅ You are up to date!'
-      case 'downloading':
-        return `⬇️ Downloading update... ${downloadProgress}%`
-      case 'downloaded':
-        return '✅ Update ready to install!'
-      case 'error':
-        return `❌ Error: ${updateError || 'Update check failed'}`
-      default:
-        return 'Ready to check for updates'
-    }
-  }
-
   const getStatusColor = () => {
     switch (updateStatus) {
       case 'checking':
@@ -184,14 +179,29 @@ const UpdatesPage = () => {
       case 'error':
         return 'var(--color-error)'
       default:
-        return 'var(--color-text-secondary)'
+        return 'var(--color-text-tertiary)'
     }
   }
+
+  useEffect(() => {
+    // Automatically check for updates on page load
+    window.updater.checkForUpdates()
+
+    // Cleanup function to reset update status on unmount
+    return () => {
+      setUpdateStatus('idle')
+      setUpdateInfo(null)
+      setDownloadProgress(0)
+      setUpdateError(null)
+    }
+  }, [])
 
   return (
     <div>
       <h1 className="main-heading">Updates</h1>
-      <p className="main-description">Lorem ipsum dolor sit amet consectetur.</p>
+      <p className="main-description">
+        Keep your application up to date with the latest features and improvements.
+      </p>
 
       <section className={styles['updates']}>
         <div className={styles['updates__container']}>
@@ -297,70 +307,193 @@ const UpdatesPage = () => {
             ]}
           >
             <div className={styles['update-controls']}>
-              {/* Status Display */}
-              <div className={styles['update-controls__status']}>
-                <p style={{ color: getStatusColor(), fontWeight: 'var(--font-weight-semibold)' }}>
-                  {getStatusMessage()}
-                </p>
-
-                {/* Version Info */}
-                {appInfo && (
-                  <div className={styles['update-controls__version']}>
-                    <span>Current: v{appInfo.version}</span>
-                    {updateInfo?.version && (
-                      <span className={styles['update-controls__latest']}>
-                        Latest: v{updateInfo.version}
-                      </span>
+              <div className={styles['update-controls__status-icon-container']}>
+                <div
+                  className={styles['update-controls__status-icon']}
+                  style={{
+                    filter: `drop-shadow(0 0 20px ${getStatusColor()})`
+                  }}
+                >
+                  <AnimatePresence mode="popLayout">
+                    {updateStatus === 'idle' && (
+                      <motion.div
+                        key="idle"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <ArrowsClockwiseIcon size={120} color={getStatusColor()} />
+                      </motion.div>
                     )}
-                  </div>
-                )}
-              </div>
-
-              {/* Download Progress Bar */}
-              {updateStatus === 'downloading' && (
-                <div className={styles['update-controls__progress']}>
-                  <div className={styles['update-controls__progress-bar']}>
-                    <div
-                      className={styles['update-controls__progress-fill']}
-                      style={{ width: `${downloadProgress}%` }}
-                    />
-                  </div>
-                  <span className={styles['update-controls__progress-text']}>
-                    {downloadProgress}%
-                  </span>
+                    {updateStatus === 'checking' && (
+                      <motion.div
+                        key="checking"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <MagnifyingGlassIcon size={120} color={getStatusColor()} />
+                      </motion.div>
+                    )}
+                    {updateStatus === 'available' && (
+                      <motion.div
+                        key="available"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <RocketLaunchIcon size={120} color={getStatusColor()} />
+                      </motion.div>
+                    )}
+                    {updateStatus === 'not-available' && (
+                      <motion.div
+                        key="not-available"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <SealCheckIcon size={120} color={getStatusColor()} />
+                      </motion.div>
+                    )}
+                    {updateStatus === 'downloading' && (
+                      <motion.div
+                        key="downloading"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <DownloadSimpleIcon size={120} color={getStatusColor()} />
+                      </motion.div>
+                    )}
+                    {updateStatus === 'downloaded' && (
+                      <motion.div
+                        key="downloaded"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <ShieldCheckIcon size={120} color={getStatusColor()} />
+                      </motion.div>
+                    )}
+                    {updateStatus === 'error' && (
+                      <motion.div
+                        key="error"
+                        initial={{ opacity: 0, rotate: -90 }}
+                        animate={{ opacity: 1, rotate: 0 }}
+                        exit={{ opacity: 0, rotate: 90 }}
+                        transition={{ duration: 0.7, ease: [0.81, -0.52, 0, 0.96] }}
+                      >
+                        <XCircleIcon size={120} color={getStatusColor()} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-              )}
-
-              {/* Action Buttons */}
-              <div className={styles['update-controls__actions']}>
-                {updateStatus === 'available' && (
-                  <button className="btn btn-primary w-full" onClick={handleDownloadUpdate}>
-                    Download Update
-                  </button>
-                )}
-
-                {updateStatus === 'downloaded' && (
-                  <button className="btn btn-success w-full" onClick={handleInstallUpdate}>
-                    Install & Restart
-                  </button>
-                )}
-
-                {updateStatus === 'downloading' && (
-                  <button className="btn btn-secondary w-full" disabled>
-                    Downloading...
-                  </button>
-                )}
-
-                {(updateStatus === 'idle' ||
-                  updateStatus === 'not-available' ||
-                  updateStatus === 'error') && (
-                  <button
-                    className="btn btn-primary w-full"
-                    onClick={() => window.updater.checkForUpdates()}
+              </div>
+              <div className={styles['update-controls__status-actions']}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={updateStatus}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ height: '100%' }}
                   >
-                    Check for Updates
-                  </button>
-                )}
+                    {updateStatus === 'idle' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Ready to Check</h3>
+                        <p>Click below to check for available updates.</p>
+                        <button
+                          onClick={() => window.updater.checkForUpdates()}
+                          className={styles['update-controls__button-primary']}
+                        >
+                          Check for Updates
+                        </button>
+                      </div>
+                    )}
+
+                    {updateStatus === 'checking' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Checking for Updates</h3>
+                        <p>Please wait while we check for the latest version...</p>
+                      </div>
+                    )}
+
+                    {updateStatus === 'available' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Update Available!</h3>
+                        <p>Version {updateInfo?.version || 'N/A'} is ready to download.</p>
+                        <button
+                          onClick={handleDownloadUpdate}
+                          className={styles['update-controls__button-primary']}
+                        >
+                          Download Update
+                        </button>
+                      </div>
+                    )}
+
+                    {updateStatus === 'not-available' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Up to Date</h3>
+                        <p>You&apos;re running the latest version ({appInfo?.version}).</p>
+                        <button
+                          onClick={() => window.updater.checkForUpdates()}
+                          className={styles['update-controls__button-secondary']}
+                        >
+                          Check Again
+                        </button>
+                      </div>
+                    )}
+
+                    {updateStatus === 'downloading' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Downloading Update</h3>
+                        <p>Downloading version {updateInfo?.version || 'N/A'}...</p>
+                        <div className={styles['update-controls__progress-bar']}>
+                          <div
+                            className={styles['update-controls__progress-bar-fill']}
+                            style={{ width: `${downloadProgress}%` }}
+                          />
+                        </div>
+                        <p className={styles['update-controls__progress-text']}>
+                          {downloadProgress}% complete
+                        </p>
+                      </div>
+                    )}
+
+                    {updateStatus === 'downloaded' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Ready to Install</h3>
+                        <p>Update downloaded successfully. Restart to apply changes.</p>
+                        <button
+                          onClick={handleInstallUpdate}
+                          className={styles['update-controls__button-success']}
+                        >
+                          Install & Restart
+                        </button>
+                      </div>
+                    )}
+
+                    {updateStatus === 'error' && (
+                      <div className={styles['update-controls__status-content']}>
+                        <h3>Update Failed</h3>
+                        <p>{updateError || 'An error occurred while checking for updates.'}</p>
+                        <button
+                          onClick={() => window.updater.checkForUpdates()}
+                          className={styles['update-controls__button-error']}
+                        >
+                          Try Again
+                        </button>
+                      </div>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </Card>
@@ -387,13 +520,11 @@ const UpdatesPage = () => {
             <p>Loading release notes...</p>
           ) : releasesError ? (
             <div>
-              <p style={{ color: 'var(--color-error)' }}>Error: {releasesError}</p>
+              <p>Error: {releasesError}</p>
               {releasesError.includes('GitHub API not available') ? (
-                <p style={{ fontSize: '0.9em', marginTop: '8px' }}>
-                  The GitHub API wasn&apos;t loaded properly. Please restart the application.
-                </p>
+                <p>The GitHub API wasn&apos;t loaded properly. Please restart the application.</p>
               ) : (
-                <p style={{ fontSize: '0.9em', marginTop: '8px' }}>
+                <p>
                   Make sure you have a valid GitHub token in your .env file (VITE_GH_TOKEN) if this
                   is a private repository, or check your internet connection.
                 </p>
@@ -425,10 +556,7 @@ const UpdatesPage = () => {
 
               {selectedRelease && (
                 <div className={styles['releases__details']}>
-                  <pre
-                    className={styles['releases__body']}
-                    style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit' }}
-                  >
+                  <pre className={styles['releases__body']}>
                     <div className={styles['releases__external-link']}>
                       <ArrowSquareOutIcon
                         onClick={() => {

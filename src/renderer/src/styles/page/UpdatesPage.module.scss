@@ -51,93 +51,215 @@
   }
 }
 
-.update-controls {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-4;
-  padding: $spacing-2;
+// .update-controls {
+//   display: flex;
+//   flex-direction: column;
+//   gap: $spacing-4;
+//   padding: $spacing-2;
 
-  &__status {
+//   &__status {
+//     display: flex;
+//     flex-direction: column;
+//     gap: $spacing-2;
+
+//     p {
+//       font-size: $font-size-lg;
+//       margin: 0;
+//     }
+//   }
+
+//   &__version {
+//     display: flex;
+//     gap: $spacing-3;
+//     font-size: $font-size-sm;
+//     color: var(--color-text-secondary);
+
+//     span {
+//       padding: $spacing-1 $spacing-2;
+//       background-color: var(--color-surface);
+//       border-radius: $radius-sm;
+//     }
+//   }
+
+//   &__latest {
+//     color: var(--color-primary) !important;
+//     font-weight: $font-weight-semibold;
+//   }
+
+//   &__progress {
+//     display: flex;
+//     flex-direction: column;
+//     gap: $spacing-2;
+//   }
+
+//   &__progress-bar {
+//     width: 100%;
+//     height: 8px;
+//     background-color: var(--color-surface);
+//     border-radius: $radius-full;
+//     overflow: hidden;
+//   }
+
+//   &__progress-fill {
+//     height: 100%;
+//     background-color: var(--color-primary);
+//     transition: width 0.3s ease;
+//     border-radius: $radius-full;
+//   }
+
+//   &__progress-text {
+//     font-size: $font-size-sm;
+//     color: var(--color-text-secondary);
+//     text-align: center;
+//   }
+
+//   &__actions {
+//     display: flex;
+//     flex-direction: column;
+//     gap: $spacing-2;
+//   }
+
+//   &__notes {
+//     padding: $spacing-3;
+//     background-color: var(--color-surface);
+//     border-radius: $radius-md;
+//     border: 1px solid var(--color-border-secondary);
+
+//     h4 {
+//       font-size: $font-size-sm;
+//       font-weight: $font-weight-semibold;
+//       margin-bottom: $spacing-2;
+//       color: var(--color-text-primary);
+//     }
+
+//     p {
+//       font-size: $font-size-sm;
+//       color: var(--color-text-secondary);
+//       margin: 0;
+//       line-height: 1.5;
+//     }
+//   }
+// }
+
+.update-controls {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: $spacing-4;
+  margin-top: $spacing-2;
+  height: 26rem;
+
+  &__status-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__status-icon {
+    width: 15rem;
+    height: 15rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: $radius-full;
+
+    transition:
+      background-color 800ms,
+      border-color 200ms,
+      filter 800ms,
+      box-shadow 800ms;
+  }
+
+  &__status-actions {
+    height: 100%;
+
+    padding: $spacing-2;
+  }
+
+  &__status-content {
+    height: 100%;
+
     display: flex;
     flex-direction: column;
-    gap: $spacing-2;
+    justify-content: center;
+
+    text-align: center;
+
+    h3 {
+      font-size: $font-size-xl;
+      margin-bottom: $spacing-2;
+    }
 
     p {
-      font-size: $font-size-lg;
-      margin: 0;
+      font-size: $font-size-md;
+      color: var(--color-text-secondary);
+      margin-bottom: $spacing-4;
+    }
+
+    button {
+      margin-top: $spacing-4;
+      padding: $spacing-2 $spacing-4;
+      cursor: pointer;
+      border: 1px solid var(--color-border-primary);
+      border-radius: $radius-md;
+      font-size: $font-size-md;
+      font-weight: var(--font-weight-medium);
+      transition: all 200ms ease;
+
+      &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
     }
   }
 
-  &__version {
-    display: flex;
-    gap: $spacing-3;
-    font-size: $font-size-sm;
-    color: var(--color-text-secondary);
-
-    span {
-      padding: $spacing-1 $spacing-2;
-      background-color: var(--color-surface);
-      border-radius: $radius-sm;
-    }
+  &__button-primary {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
   }
 
-  &__latest {
-    color: var(--color-primary) !important;
-    font-weight: $font-weight-semibold;
+  &__button-success {
+    background: var(--color-success);
+    color: white;
+    border-color: var(--color-success);
   }
 
-  &__progress {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-2;
+  &__button-error {
+    background: var(--color-error);
+    color: white;
+    border-color: var(--color-error);
+  }
+
+  &__button-secondary {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-primary);
   }
 
   &__progress-bar {
-    width: 100%;
+    margin-top: $spacing-4;
+    width: 90%;
     height: 8px;
-    background-color: var(--color-surface);
-    border-radius: $radius-full;
+    background: var(--color-surface);
+    border-radius: $radius-sm;
     overflow: hidden;
-  }
+    margin-left: auto;
+    margin-right: auto;
 
-  &__progress-fill {
-    height: 100%;
-    background-color: var(--color-primary);
-    transition: width 0.3s ease;
-    border-radius: $radius-full;
+    &-fill {
+      height: 100%;
+      background: var(--color-warning);
+      transition: width 0.3s ease;
+    }
   }
 
   &__progress-text {
-    font-size: $font-size-sm;
-    color: var(--color-text-secondary);
-    text-align: center;
-  }
-
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    gap: $spacing-2;
-  }
-
-  &__notes {
-    padding: $spacing-3;
-    background-color: var(--color-surface);
-    border-radius: $radius-md;
-    border: 1px solid var(--color-border-secondary);
-
-    h4 {
-      font-size: $font-size-sm;
-      font-weight: $font-weight-semibold;
-      margin-bottom: $spacing-2;
-      color: var(--color-text-primary);
-    }
-
-    p {
-      font-size: $font-size-sm;
-      color: var(--color-text-secondary);
-      margin: 0;
-      line-height: 1.5;
-    }
+    margin-top: $spacing-2;
+    font-size: $font-size-md;
+    color: var(--color-text-tertiary);
   }
 }
 
@@ -174,6 +296,8 @@
 
   &__body {
     font-size: $font-size-md;
+    white-space: pre-wrap;
+    font-family: inherit;
 
     h3 {
       font-size: $font-size-2xl;

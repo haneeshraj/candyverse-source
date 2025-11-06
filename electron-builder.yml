@@ -13,11 +13,22 @@ asarUnpack:
   - resources/**
 win:
   executableName: candyverse
+  target:
+    - nsis
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  oneClick: false
+  perMachine: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  runAfterFinish: true
+  deleteAppDataOnUninstall: false
+  installerLanguages:
+    - en_US
+  warningsAsErrors: false
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
