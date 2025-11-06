@@ -27,7 +27,7 @@ const AudioToggle = () => {
   const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = Number(e.target.value)
     setVolumeLevel(newVolume)
-    audioManager.setVolume(newVolume / 100) // Assuming volume is between 0 and 1
+    audioManager.setVolume(newVolume / 100)
     setIsMuted(newVolume === 0)
 
     if (newVolume === 0) {
@@ -42,7 +42,7 @@ const AudioToggle = () => {
       audioManager.unmute()
       setIsMuted(false)
       if (volumeLevel === 0) {
-        setVolumeLevel(50) // Restore to a default volume level
+        setVolumeLevel(50)
         audioManager.setVolume(0.5)
       }
     } else {
@@ -52,19 +52,17 @@ const AudioToggle = () => {
     }
   }
 
-  // Load playing state from localStorage and audio manager on mount
   useEffect(() => {
     const savedPlayingState = localStorage.getItem('audioPlaying')
     if (savedPlayingState !== null) {
       setIsPlaying(savedPlayingState === 'true')
     } else {
-      // Default to true (playing)
       setIsPlaying(true)
     }
   }, [])
 
   return (
-    <>
+    <div className={styles['audio-toggle-container']}>
       <button
         className={styles['audio-toggle']}
         onClick={() => setIsOpen(!isOpen)}
@@ -80,25 +78,20 @@ const AudioToggle = () => {
             initial={{
               clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%)',
               y: -4,
-              x: -8,
               borderRadius: '0.2rem'
             }}
             animate={{
               clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
               y: 0,
-              x: -8,
               borderRadius: '2.2rem'
             }}
             exit={{
               clipPath: 'polygon(0 0, 100% 0, 100% 0%, 0 0%)',
               y: -4,
-              x: -8,
               borderRadius: '0.2rem'
             }}
             transition={{ duration: 1, ease: [0.52, 0.02, 0, 0.97] }}
           >
-            {/* Referred this. Cool as shit. https://codepen.io/giandev10/pen/gbOdEGw */}
-
             <button className={styles['audio-toggle__play']} onClick={toggleAudio}>
               {isPlaying ? <PauseIcon /> : <PlayIcon />}
             </button>
@@ -116,7 +109,7 @@ const AudioToggle = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   )
 }
 

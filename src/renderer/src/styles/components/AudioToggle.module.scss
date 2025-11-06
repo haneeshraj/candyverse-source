@@ -1,5 +1,9 @@
 @use '../../styles/variables/spacing' as *;
 
+.audio-toggle-container {
+  position: relative;
+}
+
 .audio-toggle {
   display: flex;
   align-items: center;
@@ -13,8 +17,6 @@
   color: var(--color-text-primary);
   cursor: pointer;
   transition: all 0.2s ease;
-
-  position: relative;
 
   -webkit-app-region: no-drag;
 
@@ -40,18 +42,20 @@
 
   &__slider {
     position: absolute;
-    bottom: -18.8rem;
+    top: calc(100% + 0.8rem);
+    left: 50%;
+    margin-left: -2.2rem;
+    transform: translateX(-50%);
     width: 4.4rem;
     height: 18.4rem;
     background-color: var(--color-surface);
-
     border-radius: 2.2rem;
     padding-block: 0.6rem;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.4rem;
+    z-index: 1000;
   }
 
   &__mute,

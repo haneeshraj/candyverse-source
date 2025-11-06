@@ -1,9 +1,16 @@
+// Core Libraries (React)
 import { useState, useEffect } from 'react'
+
+// Third-Party Libraries
 import clsx from 'clsx'
 
+// @ based imports (path aliases)
 import { Navigation, AnimatedOutlet } from '@renderer/components'
+
+// ./ or ../ based imports (relative imports)
 import styles from './styles.module.scss'
 import Titlebar from './Titlebar'
+import PatchNoteModal from './PatchNoteModal'
 
 function RootLayout(): JSX.Element {
   const [isSidebarHovered, setIsSidebarHovered] = useState(false)
@@ -35,6 +42,7 @@ function RootLayout(): JSX.Element {
           <AnimatedOutlet />
         </div>
       </main>
+      <PatchNoteModal />
     </>
   )
 }

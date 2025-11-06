@@ -8,7 +8,7 @@ import {
 } from '@phosphor-icons/react'
 
 import styles from './styles.module.scss'
-import { ThemeSwitcher, AudioToggle } from '@renderer/components'
+import { ThemeSwitcher, AudioToggle, UpdateAvailable } from '@renderer/components'
 
 const closeWindow = () => {
   window.titlebar.close()
@@ -32,6 +32,7 @@ const Controls = () => {
   }, [])
   return (
     <div className={styles['controls-wrapper']}>
+      <UpdateAvailable />
       <AudioToggle />
       <ThemeSwitcher />
 

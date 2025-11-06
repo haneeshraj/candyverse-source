@@ -1,0 +1,67 @@
+@use '../utils/responsive-mixins' as *;
+@use '../utils/typography-mixins' as *;
+@use '../variables/spacing' as *;
+@use '../variables/typography' as *;
+
+.patch-note-modal {
+  &__header {
+    margin-bottom: $spacing-4;
+  }
+
+  &__version-info {
+    color: var(--color-text-secondary);
+    margin-bottom: $spacing-2;
+
+    strong {
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  &__release-date {
+    color: var(--color-text-tertiary);
+    font-size: $font-size-sm;
+  }
+
+  &__content {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: $spacing-4 $spacing-8;
+    background-color: var(--color-surface);
+    border-radius: $radius-md;
+    border: 1px solid var(--color-border-secondary);
+
+    // Custom scrollbar
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--color-surface);
+      border-radius: $radius-sm;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--color-border-primary);
+      border-radius: $radius-sm;
+
+      &:hover {
+        background: var(--color-text-tertiary);
+      }
+    }
+  }
+
+  &__footer-tip {
+    margin-top: $spacing-4;
+    padding: $spacing-3;
+    background-color: var(--color-surface);
+    border-radius: $radius-md;
+    font-size: $font-size-sm;
+    color: var(--color-text-secondary);
+    text-align: center;
+
+    strong {
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+  }
+}

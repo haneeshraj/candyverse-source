@@ -11,6 +11,7 @@ Candyverse is an Electron desktop application built with React, TypeScript, and 
 - **Styling**: SCSS Modules with custom responsive system
 - **Router**: React Router v6
 - **Icons**: Phosphor Icons React
+- **Animations**: Framer Motion (import from `motion/react`)
 - **Build**: electron-vite, electron-builder
 
 ---
@@ -28,6 +29,7 @@ import { useState, useEffect } from 'react'
 // 2. Third-Party Libraries
 import { useNavigate } from 'react-router-dom'
 import clsx from 'clsx'
+import { motion, AnimatePresence } from 'motion/react'
 import { HomeIcon } from '@phosphor-icons/react'
 
 // 3. @ based imports (path aliases)
@@ -65,20 +67,30 @@ import styles from './styles.module.scss'
    import { HomeIcon } from '@phosphor-icons/react'
    ```
 
-3. **Use path aliases**:
+3. **Framer Motion imports**:
+
+   ```typescript
+   // ✅ Correct - Always use motion/react
+   import { motion, AnimatePresence, useAnimation } from 'motion/react'
+
+   // ❌ Avoid - Don't use framer-motion
+   import { motion } from 'framer-motion'
+   ```
+
+4. **Use path aliases**:
 
    - `@renderer/*` - Renderer process files
    - `@main/*` - Main process files
    - `@common/*` - Shared constants and utilities
 
-4. **Group related imports**:
+5. **Group related imports**:
 
    ```typescript
    // ✅ Multiple items from same package
    import { HomeIcon, SettingsIcon, UserIcon } from '@phosphor-icons/react'
    ```
 
-5. **Type imports**:
+6. **Type imports**:
    ```typescript
    // Use 'type' keyword for type-only imports
    import type { FC, ReactNode } from 'react'

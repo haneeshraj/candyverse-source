@@ -156,6 +156,39 @@ const UpdatesPage = () => {
     fetchReleases()
   }, [])
 
+  // Filter releases to show only current version and older versions
+  const getFilteredReleases = (): GitHubRelease[] => {
+    if (!appInfo || releases.length === 0) return releases
+
+    const currentVersion = appInfo.version
+    // Normalize versions for comparison (remove 'v' prefix if present)
+    const normalizeVersion = (v: string) => v.replace(/^v/, '')
+
+    const currentIndex = releases.findIndex(
+      (r) => normalizeVersion(r.version) === normalizeVersion(currentVersion)
+    )
+
+    // If current version not found in releases, show all releases
+    if (currentIndex === -1) return releases
+
+    // Return current version and all older versions (releases after currentIndex)
+    return releases.slice(currentIndex)
+  }
+
+  const filteredReleases = getFilteredReleases()
+
+  // Update selected release when filtered releases change
+  useEffect(() => {
+    if (filteredReleases.length > 0 && !selectedRelease) {
+      // Default to current version if available, otherwise first filtered release
+      const normalizeVersion = (v: string) => v.replace(/^v/, '')
+      const currentRelease = filteredReleases.find(
+        (r) => normalizeVersion(r.version) === normalizeVersion(appInfo?.version || '')
+      )
+      setSelectedRelease(currentRelease || filteredReleases[0])
+    }
+  }, [filteredReleases, appInfo, selectedRelease])
+
   const handleDownloadUpdate = () => {
     window.updater.download()
   }
@@ -530,24 +563,37 @@ const UpdatesPage = () => {
                 </p>
               )}
             </div>
-          ) : releases.length === 0 ? (
-            <p>No releases found.</p>
+          ) : filteredReleases.length === 0 ? (
+            <p>No releases found for your current version.</p>
           ) : (
             <div className={styles['releases']}>
               <Dropdown
-                items={releases.map((release) => ({
-                  label: `${release.name} (${release.version})`,
-                  value: release.version,
-                  action: () => {
-                    setSelectedRelease(release)
-                  },
-                  isDefault: release === releases[0]
-                }))}
+                items={filteredReleases.map((release) => {
+                  // Normalize versions for comparison
+                  const normalizeVersion = (v: string) => v.replace(/^v/, '')
+                  const isCurrent =
+                    normalizeVersion(release.version) === normalizeVersion(appInfo?.version || '')
+
+                  return {
+                    label: `${release.name} (${release.version})${isCurrent ? ' - Current' : ''}`,
+                    value: release.version,
+                    action: () => {
+                      setSelectedRelease(release)
+                    },
+                    isDefault: isCurrent
+                  }
+                })}
                 placeholder="Select a release version"
-                defaultValue={releases[0].version}
+                defaultValue={(() => {
+                  const normalizeVersion = (v: string) => v.replace(/^v/, '')
+                  const match = filteredReleases.find(
+                    (r) => normalizeVersion(r.version) === normalizeVersion(appInfo?.version || '')
+                  )
+                  return match ? match.version : filteredReleases[0].version
+                })()}
                 className={styles['releases__dropdown']}
                 onChange={(value) => {
-                  const selected = releases.find((r) => r.version === value)
+                  const selected = filteredReleases.find((r) => r.version === value)
                   if (selected) {
                     setSelectedRelease(selected)
                   }
