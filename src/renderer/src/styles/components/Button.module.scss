@@ -1,3 +1,104 @@
-.container {
-  /* Add your styles here */
+@use '../variables/spacing' as *;
+@use '../variables/typography' as *;
+@use '../utils/typography-mixins' as *;
+
+.button {
+  border: none;
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  border-radius: $radius-sm;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-family);
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  &:not(&--disabled):active {
+    transform: scale(0.98);
+  }
+
+  // Size variants
+  &--sm {
+    @include body-small;
+    padding: $spacing-2 $spacing-4;
+  }
+
+  &--md {
+    @include body;
+    padding: $spacing-3 $spacing-6;
+  }
+
+  &--lg {
+    @include body-large;
+    padding: $spacing-4 $spacing-8;
+  }
+
+  // Color variants using CSS variables for animation
+  &--primary {
+    --bg-initial: var(--color-primary);
+    --bg-hover: var(--color-primary-hover);
+    --text-initial: var(--color-button-primary-text);
+    --text-hover: var(--color-button-primary-text);
+  }
+
+  &--secondary {
+    --bg-initial: var(--color-surface);
+    --bg-hover: var(--color-surface-hover);
+    --text-initial: var(--color-text-primary);
+    --text-hover: var(--color-text-primary);
+  }
+
+  &--success {
+    --bg-initial: var(--color-primary);
+    --bg-hover: var(--color-success-hover);
+    --text-initial: white;
+    --text-hover: white;
+  }
+
+  &--error {
+    --bg-initial: var(--color-primary);
+    --bg-hover: var(--color-error-hover);
+    --text-initial: white;
+    --text-hover: white;
+  }
+
+  &--warning {
+    --bg-initial: var(--color-primary);
+    --bg-hover: var(--color-warning-hover);
+    --text-initial: white;
+    --text-hover: white;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &__content {
+    overflow: hidden;
+    position: relative;
+    height: 1.2em;
+    display: flex;
+    align-items: center;
+  }
+
+  &__text {
+    color: var(--text-initial);
+    white-space: nowrap;
+
+    &--hidden {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: var(--text-hover);
+    }
+  }
 }

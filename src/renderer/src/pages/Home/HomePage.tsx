@@ -1,12 +1,11 @@
 // Core Libraries (React)
-import { useState } from 'react'
 
 // Third-Party Libraries
 import clsx from 'clsx'
 import { LinkIcon } from '@phosphor-icons/react'
 
 // @ based imports (path aliases)
-import { Card, Dropdown, Modal } from '@renderer/components'
+import { Card, Dropdown, Modal, Button } from '@renderer/components'
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
 import useModal from '@renderer/hooks/useModal'
 
@@ -18,16 +17,6 @@ function HomePage(): JSX.Element {
   const infoModal = useModal()
   const confirmModal = useModal()
   const warningModal = useModal()
-  const [isDeleting, setIsDeleting] = useState(false)
-
-  const handleDelete = async () => {
-    setIsDeleting(true)
-    // Simulate async operation
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setIsDeleting(false)
-    confirmModal.close()
-    alert('Item deleted!')
-  }
 
   return (
     <div className={styles.main}>
@@ -38,15 +27,15 @@ function HomePage(): JSX.Element {
       <section className={styles['test-section']}>
         <h2>Modal Examples</h2>
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-          <button className="btn btn-primary" onClick={infoModal.open}>
+          <Button variant="primary" onClick={infoModal.open}>
             Open Info Modal
-          </button>
-          <button className="btn btn-secondary" onClick={confirmModal.open}>
+          </Button>
+          <Button variant="secondary" onClick={confirmModal.open}>
             Open Confirmation Modal
-          </button>
-          <button className="btn btn-error" onClick={warningModal.open}>
+          </Button>
+          <Button variant="error" onClick={warningModal.open}>
             Open Warning Modal
-          </button>
+          </Button>
         </div>
       </section>
 

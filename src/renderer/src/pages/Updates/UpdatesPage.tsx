@@ -20,7 +20,7 @@ import {
 
 // @ based imports (path aliases)
 import { withPageTransition } from '@renderer/components/AnimatedOutlet'
-import { Card, Dropdown } from '@renderer/components'
+import { Card, Dropdown, Button } from '@renderer/components'
 
 // ./ or ../ based imports (relative imports)
 import styles from '@renderer/styles/page/UpdatesPage.module.scss'
@@ -442,12 +442,9 @@ const UpdatesPage = () => {
                       <div className={styles['update-controls__status-content']}>
                         <h3>Ready to Check</h3>
                         <p>Click below to check for available updates.</p>
-                        <button
-                          onClick={() => window.updater.checkForUpdates()}
-                          className={styles['update-controls__button-primary']}
-                        >
+                        <Button onClick={() => window.updater.checkForUpdates()} variant="primary">
                           Check for Updates
-                        </button>
+                        </Button>
                       </div>
                     )}
 
@@ -462,12 +459,9 @@ const UpdatesPage = () => {
                       <div className={styles['update-controls__status-content']}>
                         <h3>Update Available!</h3>
                         <p>Version {updateInfo?.version || 'N/A'} is ready to download.</p>
-                        <button
-                          onClick={handleDownloadUpdate}
-                          className={styles['update-controls__button-primary']}
-                        >
+                        <Button onClick={handleDownloadUpdate} variant="primary">
                           Download Update
-                        </button>
+                        </Button>
                       </div>
                     )}
 
@@ -475,12 +469,12 @@ const UpdatesPage = () => {
                       <div className={styles['update-controls__status-content']}>
                         <h3>Up to Date</h3>
                         <p>You&apos;re running the latest version ({appInfo?.version}).</p>
-                        <button
+                        <Button
                           onClick={() => window.updater.checkForUpdates()}
-                          className={styles['update-controls__button-secondary']}
+                          variant="secondary"
                         >
                           Check Again
-                        </button>
+                        </Button>
                       </div>
                     )}
 
@@ -504,12 +498,9 @@ const UpdatesPage = () => {
                       <div className={styles['update-controls__status-content']}>
                         <h3>Ready to Install</h3>
                         <p>Update downloaded successfully. Restart to apply changes.</p>
-                        <button
-                          onClick={handleInstallUpdate}
-                          className={styles['update-controls__button-success']}
-                        >
+                        <Button onClick={handleInstallUpdate} variant="success">
                           Install & Restart
-                        </button>
+                        </Button>
                       </div>
                     )}
 
@@ -517,12 +508,9 @@ const UpdatesPage = () => {
                       <div className={styles['update-controls__status-content']}>
                         <h3>Update Failed</h3>
                         <p>{updateError || 'An error occurred while checking for updates.'}</p>
-                        <button
-                          onClick={() => window.updater.checkForUpdates()}
-                          className={styles['update-controls__button-error']}
-                        >
+                        <Button onClick={() => window.updater.checkForUpdates()} variant="error">
                           Try Again
-                        </button>
+                        </Button>
                       </div>
                     )}
                   </motion.div>

@@ -1,5 +1,7 @@
 import { useState } from 'react'
+
 import { useNotification } from '@renderer/hooks/useNotification'
+import Button from './Button'
 
 import styles from '@renderer/styles/components/NotificationDemo.module.scss'
 
@@ -71,21 +73,21 @@ const NotificationDemo: React.FC = () => {
       </p>
 
       <div className={styles.buttonGrid}>
-        <button className={styles.button} onClick={handleBasicNotification}>
+        <Button variant="primary" onClick={handleBasicNotification}>
           📢 Basic Notification
-        </button>
+        </Button>
 
-        <button className={styles.buttonUrgent} onClick={handleUrgentNotification}>
+        <Button variant="error" onClick={handleUrgentNotification}>
           🚨 Urgent Notification
-        </button>
+        </Button>
 
-        <button className={styles.buttonActions} onClick={handleNotificationWithActions}>
+        <Button variant="secondary" onClick={handleNotificationWithActions}>
           📬 Notification with Actions
-        </button>
+        </Button>
 
-        <button className={styles.buttonSilent} onClick={handleSilentNotification}>
+        <Button variant="secondary" onClick={handleSilentNotification}>
           🔕 Silent Notification
-        </button>
+        </Button>
       </div>
 
       {notificationSent && (
