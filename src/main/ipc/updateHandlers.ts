@@ -6,13 +6,16 @@ import { UPDATE_CHANNELS } from '../../common/constants'
 autoUpdater.autoDownload = false // Changed to false to handle manually
 autoUpdater.autoInstallOnAppQuit = true
 
-// Use import.meta.env for Vite environment variables
-const GH_TOKEN = import.meta.env.VITE_GH_TOKEN
+// GitHub token for authentication (optional for public repos)
+// For private repos, set GITHUB_TOKEN environment variable during build
+const GH_TOKEN = process.env.GH_TOKEN || import.meta.env.VITE_GH_TOKEN
 
 if (GH_TOKEN) {
   autoUpdater.requestHeaders = {
     Authorization: `token ${GH_TOKEN}`
   }
+} else {
+  console.log('No GitHub token provided - using public release URLs')
 }
 
 // Configure updater for better Windows compatibility

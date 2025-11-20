@@ -2,9 +2,10 @@ import { RouteObject } from 'react-router-dom'
 import { HouseIcon, IconProps, ListChecksIcon, GitPullRequestIcon } from '@phosphor-icons/react'
 
 import RootLayout from '../layouts/RootLayout/RootLayout'
+import ProtectedRoute from '../components/ProtectedRoute'
 
 import React from 'react'
-import { TasksPage, HomePage, NotFoundPage } from '@renderer/pages/index'
+import { TasksPage, HomePage, NotFoundPage, LoginPage } from '@renderer/pages/index'
 import UpdatesPage from '@renderer/pages/Updates/UpdatesPage'
 
 export interface RouteHandle {
@@ -14,7 +15,18 @@ export interface RouteHandle {
   category?: 'general' | 'app'
 }
 
-const routes = [
+// Define routes for main navigation
+export const appRoutes = [
+  {
+    path: '/',
+    element: <HomePage />,
+    handle: {
+      title: 'Home',
+      icon: HouseIcon,
+      showInNav: true,
+      category: 'general'
+    } as RouteHandle
+  },
   {
     path: 'tasks',
     element: <TasksPage />,
@@ -37,21 +49,6 @@ const routes = [
   }
 ]
 
-// Define routes for main navigation
-export const appRoutes = [
-  {
-    path: '/',
-    element: <HomePage />,
-    handle: {
-      title: 'Home',
-      icon: HouseIcon,
-      showInNav: true,
-      category: 'general'
-    } as RouteHandle
-  },
-  ...routes
-]
-
 // Build the router config
 export const routeConfig: RouteObject[] = [
   {
@@ -59,8 +56,21 @@ export const routeConfig: RouteObject[] = [
     element: <RootLayout />,
     children: [
       {
+        path: 'login',
+        element: <LoginPage />,
+        handle: {
+          title: 'Login',
+          icon: HouseIcon,
+          showInNav: false
+        } as RouteHandle
+      },
+      {
         index: true,
-        element: <HomePage />,
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
         handle: {
           title: 'Home',
           icon: HouseIcon,
@@ -68,7 +78,34 @@ export const routeConfig: RouteObject[] = [
           category: 'general'
         } as RouteHandle
       },
-      ...routes,
+      {
+        path: 'tasks',
+        element: (
+          <ProtectedRoute>
+            <TasksPage />
+          </ProtectedRoute>
+        ),
+        handle: {
+          title: 'Tasks',
+          icon: ListChecksIcon,
+          showInNav: true,
+          category: 'general'
+        } as RouteHandle
+      },
+      {
+        path: 'updates',
+        element: (
+          <ProtectedRoute>
+            <UpdatesPage />
+          </ProtectedRoute>
+        ),
+        handle: {
+          title: 'Updates',
+          icon: GitPullRequestIcon,
+          showInNav: true,
+          category: 'app'
+        } as RouteHandle
+      },
       {
         path: '*',
         element: <NotFoundPage />,

@@ -6,6 +6,8 @@ import clsx from 'clsx'
 
 // @ based imports (path aliases)
 import { Navigation, AnimatedOutlet } from '@renderer/components'
+import { useAuth } from '@renderer/contexts/AuthContext'
+import { useLocation } from 'react-router-dom'
 
 // ./ or ../ based imports (relative imports)
 import styles from './styles.module.scss'
@@ -14,6 +16,9 @@ import PatchNoteModal from './PatchNoteModal'
 
 function RootLayout(): JSX.Element {
   const [isSidebarHovered, setIsSidebarHovered] = useState(false)
+  const { isAuthenticated, loading } = useAuth()
+  const location = useLocation()
+  const isLoginPage = location.pathname.includes('login')
 
   useEffect(() => {
     const handleSidebarHover = (e: CustomEvent) => {
@@ -27,15 +32,33 @@ function RootLayout(): JSX.Element {
     }
   }, [])
 
+  // Show navigation only if authenticated and not on login page
+  const showNavigation = isAuthenticated && !isLoginPage
+
+  // If loading and not on login page, show loading state
+  if (loading && !isLoginPage) {
+    return (
+      <>
+        <Titlebar />
+        <main className={styles['main--no-sidebar']}>
+          <div className={styles['layout']}>
+            <p>Loading...</p>
+          </div>
+        </main>
+      </>
+    )
+  }
+
   return (
     <>
       <Titlebar />
-      <Navigation />
+      {showNavigation && <Navigation />}
       <main
         className={clsx(
           styles['main'],
-          isSidebarHovered && styles['main--sidebar-expanded'],
-          !isSidebarHovered && styles['main--sidebar-collapsed']
+          showNavigation && isSidebarHovered && styles['main--sidebar-expanded'],
+          showNavigation && !isSidebarHovered && styles['main--sidebar-collapsed'],
+          !showNavigation && styles['main--no-sidebar']
         )}
       >
         <div className={styles['layout']}>

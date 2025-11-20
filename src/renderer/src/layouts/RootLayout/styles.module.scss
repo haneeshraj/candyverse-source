@@ -14,6 +14,10 @@
   &--sidebar-expanded {
     margin-left: $sidebar-expanded;
   }
+
+  &--no-sidebar {
+    margin-left: 0;
+  }
 }
 
 .layout {
@@ -120,6 +124,21 @@
     &:hover {
       background-color: var(--color-surface-hover);
       color: var(--color-text-hover);
+    }
+  }
+
+  &--logout {
+    flex: 0;
+    padding: $spacing-2;
+    border-radius: $radius-md;
+    -webkit-app-region: no-drag;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: var(--color-surface-hover);
+      color: var(--color-primary);
     }
   }
 
