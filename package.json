@@ -35,7 +35,8 @@
     "googleapis": "^164.1.0",
     "motion": "^12.23.24",
     "react-markdown": "^10.1.0",
-    "react-router-dom": "^7.9.4"
+    "react-router-dom": "^7.9.4",
+    "sonner": "^2.0.7"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
