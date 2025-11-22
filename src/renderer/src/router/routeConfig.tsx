@@ -1,11 +1,11 @@
 import { RouteObject } from 'react-router-dom'
-import { HouseIcon, IconProps, ListChecksIcon, GitPullRequestIcon } from '@phosphor-icons/react'
+import { HouseIcon, IconProps, GitPullRequestIcon } from '@phosphor-icons/react'
 
 import RootLayout from '../layouts/RootLayout/RootLayout'
 import ProtectedRoute from '../components/ProtectedRoute'
 
 import React from 'react'
-import { TasksPage, HomePage, NotFoundPage, LoginPage } from '@renderer/pages/index'
+import { HomePage, NotFoundPage, LoginPage } from '@renderer/pages/index'
 import UpdatesPage from '@renderer/pages/Updates/UpdatesPage'
 
 export interface RouteHandle {
@@ -23,16 +23,6 @@ export const appRoutes = [
     handle: {
       title: 'Home',
       icon: HouseIcon,
-      showInNav: true,
-      category: 'general'
-    } as RouteHandle
-  },
-  {
-    path: 'tasks',
-    element: <TasksPage />,
-    handle: {
-      title: 'Tasks',
-      icon: ListChecksIcon,
       showInNav: true,
       category: 'general'
     } as RouteHandle
@@ -78,20 +68,7 @@ export const routeConfig: RouteObject[] = [
           category: 'general'
         } as RouteHandle
       },
-      {
-        path: 'tasks',
-        element: (
-          <ProtectedRoute>
-            <TasksPage />
-          </ProtectedRoute>
-        ),
-        handle: {
-          title: 'Tasks',
-          icon: ListChecksIcon,
-          showInNav: true,
-          category: 'general'
-        } as RouteHandle
-      },
+
       {
         path: 'updates',
         element: (
