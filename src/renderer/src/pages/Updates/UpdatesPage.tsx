@@ -515,7 +515,9 @@ const UpdatesPage = () => {
                     {updateStatus === 'error' && (
                       <div className={styles['update-controls__status-content']}>
                         <h3>Update Failed</h3>
-                        <p>{updateError || 'An error occurred while checking for updates.'}</p>
+                        <p className={styles['max-width-container']}>
+                          {updateError || 'An error occurred while checking for updates.'}
+                        </p>
                         <Button onClick={() => window.updater.checkForUpdates()} variant="error">
                           Try Again
                         </Button>
