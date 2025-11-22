@@ -62,22 +62,7 @@
   }
 
   // Variant styling (accent colors)
-  &--confirmation {
-    // Glow effect
-    box-shadow: 0 0 100px var(--color-primary);
-  }
-
-  &--warning {
-    box-shadow: 0 0 10px var(--color-warning);
-  }
-
-  &--error {
-    box-shadow: 0 0 10px var(--color-error);
-  }
-
-  &--success {
-    box-shadow: 0 0 10px var(--color-success);
-  }
+  // Removed: all box-shadow effects
 
   // Header
   &__header {

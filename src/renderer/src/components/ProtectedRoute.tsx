@@ -12,7 +12,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   if (loading) {
     return (
       <div className="loading-container">
-        <p>Loading...</p>
+        <p>Loading... protected route</p>
       </div>
     )
   }

@@ -71,6 +71,7 @@ const UpdatesPage = () => {
   const [updateInfo, setUpdateInfo] = useState<any>(null)
   const [downloadProgress, setDownloadProgress] = useState(0)
   const [updateError, setUpdateError] = useState<string | null>(null)
+  const [isDownloadStarted, setIsDownloadStarted] = useState(false)
 
   useEffect(() => {
     const getAppInfo = async () => {
@@ -99,6 +100,7 @@ const UpdatesPage = () => {
     window.updater.onCheckingForUpdate(() => {
       setUpdateStatus('checking')
       setUpdateError(null)
+      setIsDownloadStarted(false)
     })
 
     window.updater.onUpdateAvailable((info) => {
@@ -190,6 +192,7 @@ const UpdatesPage = () => {
   }, [filteredReleases, appInfo, selectedRelease])
 
   const handleDownloadUpdate = () => {
+    setIsDownloadStarted(true)
     window.updater.download()
   }
 
@@ -226,6 +229,7 @@ const UpdatesPage = () => {
       setUpdateInfo(null)
       setDownloadProgress(0)
       setUpdateError(null)
+      setIsDownloadStarted(false)
     }
   }, [])
 
@@ -459,7 +463,11 @@ const UpdatesPage = () => {
                       <div className={styles['update-controls__status-content']}>
                         <h3>Update Available!</h3>
                         <p>Version {updateInfo?.version || 'N/A'} is ready to download.</p>
-                        <Button onClick={handleDownloadUpdate} variant="primary">
+                        <Button
+                          onClick={handleDownloadUpdate}
+                          variant="primary"
+                          disabled={isDownloadStarted}
+                        >
                           Download Update
                         </Button>
                       </div>

@@ -42,7 +42,7 @@ function RootLayout(): JSX.Element {
         <Titlebar />
         <main className={styles['main--no-sidebar']}>
           <div className={styles['layout']}>
-            <p>Loading...</p>
+            <p>Loading...root layout</p>
           </div>
         </main>
       </>

@@ -29,17 +29,38 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setUser(currentUser)
 
       if (currentUser) {
-        // Check if user profile exists
-        const exists = await userExists(currentUser.uid)
+        try {
+          // Check if user profile exists with timeout
+          const existsPromise = userExists(currentUser.uid)
+          const timeoutPromise = new Promise<boolean>((resolve) => {
+            setTimeout(() => {
+              console.warn('User profile check timed out, assuming user exists')
+              resolve(false)
+            }, 5000)
+          })
 
-        if (!exists) {
-          // Create new user profile with 'pending' role
-          await createUserProfile(currentUser.uid, currentUser.email || '', 'pending')
+          const exists = await Promise.race([existsPromise, timeoutPromise])
+
+          if (!exists) {
+            // Create new user profile with 'pending' role
+            await createUserProfile(currentUser.uid, currentUser.email || '', 'pending')
+            setRole('pending')
+          } else {
+            // Get existing user profile
+            const profilePromise = getUserProfile(currentUser.uid)
+            const profileTimeoutPromise = new Promise<any>((resolve) => {
+              setTimeout(() => {
+                console.warn('User profile fetch timed out, defaulting to pending role')
+                resolve(null)
+              }, 5000)
+            })
+
+            const profile = await Promise.race([profilePromise, profileTimeoutPromise])
+            setRole(profile?.role || 'pending')
+          }
+        } catch (error) {
+          console.error('Error loading user profile:', error)
           setRole('pending')
-        } else {
-          // Get existing user profile
-          const profile = await getUserProfile(currentUser.uid)
-          setRole(profile?.role || null)
         }
       } else {
         setRole(null)
